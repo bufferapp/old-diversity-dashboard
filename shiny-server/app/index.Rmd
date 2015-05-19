@@ -1,0 +1,28 @@
+---
+title: ""
+output: html_document
+runtime: shiny
+---
+
+```{r, echo=FALSE}
+#download input file
+URL <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/edit#gid=0"
+download.file(URL, destfile = "./data/data.csv", method="curl", extra='-L')
+shinyApp(
+
+  ui = fluidPage(
+    selectInput("region", "Region:",
+                choices = colnames(WorldPhones)),
+    plotOutput("phonePlot", height=270)
+  ),
+
+  server = function(input, output) {
+    output$phonePlot <- renderPlot({
+      barplot(WorldPhones[,input$region]*1000,
+              ylab = "Number of Telephones", xlab = "Year")
+    })
+  },
+
+  options = list(height = 345)
+)
+```
