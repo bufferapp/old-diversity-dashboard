@@ -7,6 +7,8 @@ shinyUI(fluidPage(
         )
     ),
     fluidRow(
-        plotOutput("genderPlot"), height=600
+        column(width=10,
+            plotOutput("genderPlot"), height=600
+        )
     )
 ))
