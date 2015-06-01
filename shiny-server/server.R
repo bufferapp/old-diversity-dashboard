@@ -3,7 +3,7 @@ function(input, output) {
         usePackage("ggplot2")
         usePackage("downloader")
 
-        URL <- "https://docs.google.com/spreadsheets/d/1N80NMf2_Y8fDGkHapyu_FjnXBKXvYVcG5iLFQ02PYdg/pubhtml"
+        URL <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
 
         data <- readGoogleSheet(URL)
         data$Ethnicity <- as.factor(data$Ethnicity)
@@ -21,7 +21,7 @@ function(input, output) {
         },)
 
         output$genderPlot <- renderPlot({
-           qplot(Gender, fill=Gender,data=data) + 
+           qplot(Gender, fill=Gender,data=data) +
             facet_wrap( ~ Area, nrow=3) +
             ggtitle("Applicants Gender")
         }, height=600, units='px')

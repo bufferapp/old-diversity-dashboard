@@ -44,16 +44,19 @@ cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TR
 }
 
 readGoogleSheet <- function(url, na.string="", header=TRUE){
-        if (!file.exists('/data/data.csv'))
-                    download(url, destfile='/data/data.csv')
+    day <-format(Sys.time(), "%Y-%m-%d")
+    filename <- paste0('/data/data',day,'.csv')
+    if (!file.exists(filename))
+        download(url, destfile=filename)
+
     # Suppress warnings because Google docs seems to have incomplete final line
     suppressWarnings({
-                doc <- paste(readLines('/data/data.csv'), collapse=" ")
-                    })
-        if(nchar(doc) == 0) stop("No content found")
-        htmlTable <- gsub("^.*?(<table.*</table).*$", "\\1>", doc)
-            ret <- readHTMLTable(htmlTable, header=header, stringsAsFactors=FALSE, as.data.frame=TRUE)
-            raw <- lapply(ret, function(x){ x[ x == na.string] <- NA; x})
-                cleanGoogleTable(raw, table=1)
+        doc <- paste(readLines(filename), collapse=" ")
+    })
+    if(nchar(doc) == 0) stop("No content found")
+    htmlTable <- gsub("^.*?(<table.*</table).*$", "\\1>", doc)
+    ret <- readHTMLTable(htmlTable, header=header, stringsAsFactors=FALSE, as.data.frame=TRUE)
+    raw <- lapply(ret, function(x){ x[ x == na.string] <- NA; x})
+    cleanGoogleTable(raw, table=1)
 }
 
