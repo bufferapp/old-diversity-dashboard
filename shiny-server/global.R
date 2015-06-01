@@ -1,8 +1,7 @@
-usePackage <- function(p) {
-      if (!is.element(p, installed.packages()[,1]))
-              install.packages(p, dep = TRUE)
-  require(p, character.only = TRUE)
-}
+library(data.table);
+library(dplyr);
+library(tidyr);
+
 
 cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TRUE, dropFirstCol=NA){
       if(!is.data.frame(dat)){
@@ -60,3 +59,12 @@ readGoogleSheet <- function(url, na.string="", header=TRUE){
     cleanGoogleTable(raw, table=1)
 }
 
+
+cleanUpData <- function(data) {
+        ## IMPORT AND TIDY DATA
+    names(data) <- c("datetime","gender","ethnicity","region","age_range","department")
+
+    data$ethnicity <- gsub("White","Caucasian",data$ethnicity)
+    data$ethnicity <- gsub("Southeast Asian","Asian",data$ethnicity)
+    data
+}

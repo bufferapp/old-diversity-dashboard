@@ -1,28 +1,48 @@
+library("XML")
+library("ggplot2")
+library("downloader")
+library('scales')
+library('grid')
+library('RColorBrewer')
+
+
 function(input, output) {
-        usePackage("XML")
-        usePackage("ggplot2")
-        usePackage("downloader")
 
-        URL <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
 
-        data <- readGoogleSheet(URL)
-        data$Ethnicity <- as.factor(data$Ethnicity)
-        data$Gender <- as.factor(data$Gender)
-        #reorder factor levels for Gender
-        data <- within(data, Gender <- factor(Gender,levels=names(sort(table(Gender), decreasing=TRUE))))
-        data$Area <- as.factor(data$'Area at Buffer')
-        output$table <- renderDataTable(data)
+        team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
+        applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
 
+        urls <- list(team = team_url, applicants = applicants_url)
+
+        applicants_data <- readGoogleSheet(applicants_url)
+        applicants_data <- cleanUpData(applicants_data)
+
+        team_data <- readGoogleSheet(team_url)
+        team_data <- cleanUpData(team_data)
+
+        ## RETURN REQUESTED DATASET
+        datasetInput <- reactive({
+          switch(input$dataset,
+                 "Buffer Team" = team_data,
+                 "Applicants" = applicants_data)
+        })
+
+
+        #plots
         output$ethnicityPlot <- renderPlot({
-            qplot(Ethnicity, data=data, geom="bar", fill=Gender)  +
-            theme(axis.text.x=element_text(angle = 90, vjust = 0.5)) +
-            xlab("") + ylab("") +
-            ggtitle("Applicants by Gender and Ethnicity")
-        },)
+            data <- datasetInput()
 
-        output$genderPlot <- renderPlot({
-           qplot(Gender, fill=Gender,data=data) +
-            facet_wrap( ~ Area, nrow=3) +
-            ggtitle("Applicants Gender")
-        }, height=600, units='px')
+            department_and_gender <- data %>%
+            group_by(department,gender) %>%
+            summarise(n=n()) %>%
+            mutate(percent=n/sum(n),department_size=sum(n))
+            ggplot(department_and_gender, aes(x=reorder(department,-department_size), y=n, fill=gender)) +
+            geom_bar(stat="identity") + scale_fill_brewer(palette="Pastel1") +
+                labs(x="Area at Buffer",y="Team Members", title="Gender Breakdown of Buffer Across Areas")
+        })
+
+        #raw data
+        output$table <- renderTable({datasetInput()})
+
+
 }
