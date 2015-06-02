@@ -42,10 +42,10 @@ cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TR
           dat
 }
 
-readGoogleSheet <- function(url, na.string="", header=TRUE){
+readGoogleSheet <- function(url, name, na.string="", header=TRUE){
     day <-format(Sys.time(), "%Y-%m-%d")
-    filename <- paste0('/data/data',day,'.csv')
-    if (!file.exists(filename))
+    filename <- paste0('/data/',name,day,'.csv')
+     if (!file.exists(filename))
         download(url, destfile=filename)
 
     # Suppress warnings because Google docs seems to have incomplete final line
@@ -61,7 +61,7 @@ readGoogleSheet <- function(url, na.string="", header=TRUE){
 
 
 cleanUpData <- function(data) {
-        ## IMPORT AND TIDY DATA
+    ## IMPORT AND TIDY DATA
     names(data) <- c("datetime","gender","ethnicity","region","age_range","department")
 
     data$ethnicity <- gsub("White","Caucasian",data$ethnicity)

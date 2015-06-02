@@ -14,22 +14,22 @@ function(input, output) {
 
         urls <- list(team = team_url, applicants = applicants_url)
 
-        applicants_data <- readGoogleSheet(applicants_url)
+        applicants_data <- readGoogleSheet(applicants_url, 'applicants')
         applicants_data <- cleanUpData(applicants_data)
 
-        team_data <- readGoogleSheet(team_url)
+        team_data <- readGoogleSheet(team_url, 'team')
         team_data <- cleanUpData(team_data)
 
         ## RETURN REQUESTED DATASET
         datasetInput <- reactive({
           switch(input$dataset,
-                 "Buffer Team" = team_data,
+                 "The Buffer Team" = team_data,
                  "Applicants" = applicants_data)
         })
 
 
         #plots
-        output$ethnicityPlot <- renderPlot({
+        output$genderPlot <- renderPlot({
             data <- datasetInput()
 
             department_and_gender <- data %>%
@@ -41,8 +41,21 @@ function(input, output) {
                 labs(x="Area at Buffer",y="Team Members", title="Gender Breakdown of Buffer Across Areas")
         })
 
+
+        output$ethnicityPlot <- renderPlot({
+            data <- datasetInput()
+            department_and_ethnicity <- data %>%
+                group_by(department,ethnicity) %>%
+                summarise(n=n()) %>%
+                mutate(percent=n/sum(n),department_size=sum(n))
+
+            ggplot(department_and_ethnicity, aes(x=reorder(department,department_size), y=n, fill=ethnicity)) +
+            geom_bar(stat="identity") + scale_y_continuous(breaks=seq(0,10,2)) + coord_flip() +
+            labs(x="Area at Buffer",y="Team Members", title="Ethnicity Breakdown of Buffer Across Areas") +
+            scale_fill_brewer(palette="Pastel1")
+        })
+
         #raw data
-        output$table <- renderTable({datasetInput()})
-
-
+        output$teamTable <- renderTable(team_data)
+        output$applicantsTable <- renderTable(applicants_data)
 }
