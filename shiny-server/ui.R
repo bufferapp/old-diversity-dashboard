@@ -7,7 +7,7 @@ shinyUI(
             sidebarLayout(
                 sidebarPanel(
                     tags$div(style="margin-bottom: 40px", "All data collected from a voluntary, anonymous survey completed by applicants and the Buffer team\n"),
-                    selectInput("dataset", "Show diversity data for",choices = c("The Buffer Team", "Applicants")),
+                    selectInput("dataset", "Show diversity data for",choices = c("Applicants","The Buffer Team")),
                     radioButtons("plotType", "Plot type",c("Bar"="b", "Pie"="p")),
                     checkboxGroupInput("areaFilter", "Filter by area",
                         c('Development',
@@ -42,7 +42,10 @@ shinyUI(
                             tags$div(class='panel panel-default',
                                 tags$div(class='panel-heading','Gender Data'),
                                 tags$div(class='panel-body',
-                                    plotOutput("genderPlot")
+                                    plotOutput("genderPlot"),
+                                    conditionalPanel(condition="input.dataset =='Applicants'",
+                                        plotOutput("genderTimeSeries")
+                                     )
                                 )
                             )
                         )
@@ -53,7 +56,10 @@ shinyUI(
                             tags$div(class='panel panel-default',
                                 tags$div(class='panel-heading','Ethnicity Data'),
                                 tags$div(class='panel-body',
-                                    plotOutput("ethnicityPlot")
+                                    plotOutput("ethnicityPlot"),
+                                    conditionalPanel(condition="input.dataset =='Applicants'",
+                                        plotOutput("ethnicityTimeSeries")
+                                     )
                                 )
                             )
                         )
@@ -69,11 +75,11 @@ shinyUI(
                     tableOutput('applicantsTable')
                 )
              )
-        #,tabPanel('Debug',
-        #        mainPanel(
-        #            tableOutput('debugTable1'),
-        #            tableOutput('debugTable2')
-        #        )
-        #)
+        ,tabPanel('Debug',
+        mainPanel(
+        tableOutput('debugTable1'),
+        tableOutput('debugTable2')
+        )
+        )
     )
 )

@@ -5,8 +5,6 @@ library('scales')
 library('grid')
 library('RColorBrewer')
 
-
-
 function(input, output) {
         filterAreas <- function(data,areas) {
            data[data$department %in% areas,]
@@ -46,7 +44,6 @@ function(input, output) {
                 summarise(n=n()) %>%
                 mutate(percent=n/sum(n),department="Total", department_size=n)
 
-            output$debugTable1 <-renderTable(department_and_gender)
             output$debugTable2 <-renderTable(total_row)
 
             total_gender_breakdown <- rbind(department_and_gender,total_row)
@@ -69,6 +66,31 @@ function(input, output) {
               }
         })
 
+        output$genderTimeSeries <- renderPlot({
+            data <- datasetInput()
+            data <- data[-1,]
+            data$posixDateTime <- as.POSIXct(data$date,format="%m/%d/%Y")
+            data$posixDate <- as.Date(data$posixDateTime)
+
+            time_and_gender <- data %>%
+                group_by(posixDate,gender) %>%
+                summarise(n=n())
+
+           #fill in empty time series data with zeros to make stacked area chart
+           empty <- expand.grid(posixDate=unique(time_and_gender$posixDate), gender=unique(time_and_gender$gender))
+           time_and_gender <- merge(x=empty, y=time_and_gender, all.x=T) 
+           time_and_gender[is.na(time_and_gender$n),]$n <- 0
+
+            output$debugTable1 <-renderTable(time_and_gender)
+            output$debugTable2 <-renderTable(empty)
+
+            ggplot(time_and_gender, aes(x=posixDate,y=n, fill=gender)) +
+                geom_area(stat="Identity") +
+                scale_fill_brewer(palette="Pastel1") +
+                labs(x="Date",y="People", title="Gender of Applicants over time\n") +
+                theme_minimal()
+
+        })
 
         output$ethnicityPlot <- renderPlot({
             data <- datasetInput()
@@ -107,6 +129,32 @@ function(input, output) {
                     labs(x="Area at Buffer",y="\nPeople", title="Ethnicity Breakdown Across Areas\n") +
                     scale_fill_brewer(palette="Pastel1") + theme_minimal()
             }
+        })
+
+        output$ethnicityTimeSeries <- renderPlot({
+            data <- datasetInput()
+            data <- data[-1,]
+            data$posixDateTime <- as.POSIXct(data$date,format="%m/%d/%Y")
+            data$posixDate <- as.Date(data$posixDateTime)
+
+            time_and_ethnicity <- data %>%
+                group_by(posixDate,ethnicity) %>%
+                summarise(n=n())
+
+           #fill in empty time series data with zeros to make stacked area chart
+           empty <- expand.grid(posixDate=unique(time_and_ethnicity$posixDate), ethnicity=unique(time_and_ethnicity$ethnicity))
+           time_and_ethnicity <- merge(x=empty, y=time_and_ethnicity, all.x=T) 
+           time_and_ethnicity[is.na(time_and_ethnicity$n),]$n <- 0
+
+            output$debugTable1 <-renderTable(time_and_ethnicity)
+            output$debugTable2 <-renderTable(empty)
+
+            ggplot(time_and_ethnicity, aes(x=posixDate,y=n, fill=ethnicity)) +
+                geom_area(stat="Identity") +
+                scale_fill_brewer(palette="Pastel1") +
+                labs(x="Date",y="People", title="Ethnicity of Applicants over time\n") +
+                theme_minimal()
+
         })
 
 
