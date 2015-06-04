@@ -43,7 +43,7 @@ function(input, output) {
             mutate(percent=n/sum(n),department_size=sum(n))
             ggplot(department_and_gender, aes(x=reorder(department,-department_size), y=n, fill=gender)) +
             geom_bar(stat="identity") + scale_fill_brewer(palette="Pastel1") +
-                labs(x="Area at Buffer",y="Team Members", title="Gender Breakdown of Buffer Across Areas")
+                labs(x="\nArea at Buffer",y="People", title="Gender Breakdown Across Areas")
         })
 
 
@@ -56,7 +56,7 @@ function(input, output) {
 
             ggplot(department_and_ethnicity, aes(x=reorder(department,department_size), y=n, fill=ethnicity)) +
             geom_bar(stat="identity") + scale_y_continuous(breaks=seq(0,10,2)) + coord_flip() +
-            labs(x="Area at Buffer",y="Team Members", title="Ethnicity Breakdown of Buffer Across Areas") +
+            labs(x="Area at Buffer",y="\nPeople", title="Ethnicity Breakdown Across Areas") +
             scale_fill_brewer(palette="Pastel1")
         })
 

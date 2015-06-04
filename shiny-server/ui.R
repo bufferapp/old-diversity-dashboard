@@ -10,14 +10,23 @@ shinyUI(
                 mainPanel(
                     fluidRow(
                         column(width=10,
-                            plotOutput("genderPlot")
+                            tags$div(class='panel panel-default',
+                                tags$div(class='panel-heading','Gender Data'),
+                                tags$div(class='panel-body',
+                                    plotOutput("genderPlot")
+                                )
+                            )
                         )
                     ),
 
-
                     fluidRow(
                         column(width=10,
-                            plotOutput("ethnicityPlot"), height=600
+                            tags$div(class='panel panel-default',
+                                tags$div(class='panel-heading','Ethnicity Data'),
+                                tags$div(class='panel-body',
+                                    plotOutput("ethnicityPlot")
+                                )
+                            )
                         )
                     )
                 )
