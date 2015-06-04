@@ -8,6 +8,9 @@ library('RColorBrewer')
 
 
 function(input, output) {
+        filterAreas <- function(data,areas) {
+           data[data$department %in% areas,]
+        }
         team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
         applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
 
@@ -23,20 +26,14 @@ function(input, output) {
         ## RETURN REQUESTED DATASET
         datasetInput <- reactive({
           switch(input$dataset,
-                 "The Buffer Team" = data$team,
-                 "Applicants" = data$applicants)
-        })
-        datasetInputRaw <- reactive({
-          switch(input$dataset,
-                 "The Buffer Team" = data$team_raw,
-                 "Applicants" = data$applicants_raw)
+                 "The Buffer Team" = filterAreas(data$team, input$areaFilter),
+                 "Applicants" = filterAreas(data$applicants, input$areaFilter))
         })
 
 
         #bar charts
         output$genderPlot <- renderPlot({
             data <- datasetInput()
-
             department_and_gender <- data %>%
                 group_by(department,gender) %>%
                 summarise(n=n()) %>%
