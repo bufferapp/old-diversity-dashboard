@@ -5,7 +5,9 @@ shinyUI(
         tabPanel('Graphs',
             sidebarLayout(
                 sidebarPanel(
-                    selectInput("dataset", "Show diversity data for",choices = c("The Buffer Team", "Applicants"))
+                    tags$div(style="margin-bottom: 40px", "All data collected from a voluntary, anonymous survey completed by applicants and the Buffer team\n"),
+                    selectInput("dataset", "Show diversity data for",choices = c("The Buffer Team", "Applicants")),
+                    radioButtons("plotType", "Plot type",c("Bar"="b", "Pie"="p"))
                 ),
                 mainPanel(
                     fluidRow(
@@ -40,5 +42,11 @@ shinyUI(
                     tableOutput('applicantsTable')
                 )
              )
+        #,tabPanel('Debug',
+        #        mainPanel(
+        #            tableOutput('debugTable1'),
+        #            tableOutput('debugTable2')
+        #        )
+        #)
     )
 )
