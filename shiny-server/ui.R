@@ -1,8 +1,9 @@
 library(shinythemes)
 
 shinyUI(
-    navbarPage("Buffer Diversity Dashboard",theme = shinytheme("flatly"),
+    navbarPage(title="Buffer Diversity Dashboard",theme = shinytheme("flatly"),
         tabPanel('Graphs',
+            tags$link(rel = "stylesheet", type = "text/css", href = "button.css"),
             sidebarLayout(
                 sidebarPanel(
                     tags$div(style="margin-bottom: 40px", "All data collected from a voluntary, anonymous survey completed by applicants and the Buffer team\n"),
@@ -25,7 +26,15 @@ shinyUI(
                             'Customer Research',
                             'Growth',
                             'Community')
-                    )
+                    ),
+                    tags$div(style="margin: 50px 0 40px", 
+                             tags$h3("Buffer is the easiest way to save time on social media"),
+                             tags$button(class="button large btn-primary hero-cta btn-rounded",
+                                tags$a(href="https://bufferapp.com/?utm_source=traction&utm_medium=DiversityDashboard&utm_campaign=sidebar-sign-up",
+                                       "Start Scheduling Posts on Social Media")
+                             )
+                    ),
+                    tags$div("Want to be part of the journey? ", tags$a(href="https://buffer.com/journey", "We're hiring!"))
                 ),
                 mainPanel(
                     fluidRow(

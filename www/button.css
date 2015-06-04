@@ -1,0 +1,64 @@
+btn.btn-primary:hover, button.btn-primary:hover, input.btn-primary[type="button"]:hover, input.btn-primary[type="reset"]:hover, input.btn-primary[type="submit"]:hover {
+    background: #2D99EC none repeat scroll 0% 0%;
+    border-color: #137DCF;
+    color: #FFF;
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.07) inset;
+    text-decoration: none;
+}
+section.hero .hero-cta {
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
+.button.large, button.large, input.large[type="button"], input.large[type="reset"], input.large[type="submit"] {
+    padding: 20px 40px;
+    font-size: 15.4px;
+}
+.button.btn-rounded, button.btn-rounded, input.btn-rounded[type="button"], input.btn-rounded[type="reset"], input.btn-rounded[type="submit"] {
+    border-radius: 50px;
+    padding: 10px 20px;
+}
+.button.btn-primary, button.btn-primary, input.btn-primary[type="button"], input.btn-primary[type="reset"], input.btn-primary[type="submit"] {
+    background: #168EEA none repeat scroll 0% 0%;
+    border: 1px solid #137DCF;
+    color: #FFF;
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.07) inset;
+    font-size: 14px;
+    font-weight: 400;
+}
+.button:hover, button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover {
+    color: #323B43;
+    text-shadow: none;
+    border: 1px solid #AFBECB;
+    box-shadow: none;
+}
+.button:hover, button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover {
+    background: #FFF none repeat scroll 0% 0%;
+    text-decoration: none;
+}
+.button, button, input[type="button"], input[type="reset"], input[type="submit"] {
+    background: #FFF none repeat scroll 0% 0%;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+    color: #363C40;
+    text-decoration: none;
+    line-height: 21px;
+    text-shadow: none;
+    margin-bottom: 20px;
+    padding: 8px 20px;
+    display: inline-block;
+    cursor: pointer;
+    box-sizing: border-box;
+    box-shadow: none;
+    border: 1px solid #CED7DF;
+    border-radius: 3px;
+    position: relative;
+    top: 0px;
+}
+*, *::after, *::before {
+    box-sizing: inherit;
+}
+.hero {
+    text-align: center;
+}

@@ -50,7 +50,7 @@ urls <- function() {
 
 readGoogleSheet <- function(url, name, na.string="", header=TRUE){
     day <-format(Sys.time(), "%Y-%m-%d")
-    filename <- paste0('/data/',name,day,'.csv')
+    filename <- paste0('/data/','foo',name,day,'.csv')
      if (!file.exists(filename))
         download(url, destfile=filename)
 
@@ -95,8 +95,11 @@ mergeData <- function(data) {
     data
 }
 
-readData <- function (key) {
-    u <- urls()
+readData <- function (key='team') {
+    team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
+    applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
+    u <- list(team=team_url, applicants=applicants_url)
+
     d <- readGoogleSheet(u[key], key)
     cleanUpData(d)
 }

@@ -5,3 +5,4 @@ shiny:
   volumes:
     - shiny-server/:/srv/shiny-server/
     - conf/:/ect/shiny-server/
+    - www/:/srv/www/

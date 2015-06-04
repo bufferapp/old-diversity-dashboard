@@ -11,15 +11,17 @@ function(input, output) {
         filterAreas <- function(data,areas) {
            data[data$department %in% areas,]
         }
+        data <- list()
+
         team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
         applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
 
-        urls <- list(team = team_url, applicants = applicants_url)
+        data$applicants_raw <- readGoogleSheet(applicants_url, 'applicants')
+        data$applicants_raw <- cleanUpData(data$applicants_raw) 
 
-        data <- list()
+        data$team_raw <- readGoogleSheet(team_url, 'team')
+        data$team_raw <- cleanUpData(data$team_raw) 
 
-        data$applicants_raw <- readData('applicants')
-        data$team_raw <- readData('team')
         data$applicants <- mergeData(data$applicants_raw)
         data$team <- mergeData(data$team_raw)
 
