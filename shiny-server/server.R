@@ -9,6 +9,9 @@ function(input, output) {
         filterAreas <- function(data,areas) {
            data[data$department %in% areas,]
         }
+        filterEthnicities <- function(data,ethnicities) {
+           data[data$ethnicity %in% ethnicities,]
+        }
         data <- list()
 
         team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
@@ -26,8 +29,9 @@ function(input, output) {
         ## RETURN REQUESTED DATASET
         datasetInput <- reactive({
           switch(input$dataset,
-                 "The Buffer Team" = filterAreas(data$team, input$areaFilter),
-                 "Applicants" = filterAreas(data$applicants, input$areaFilter))
+                 "The Buffer Team" = filterEthnicities(filterAreas(data$team, input$areaFilter),input$ethnicityFilter),
+                 "Applicants" = filterEthnicities(filterAreas(data$applicants, input$areaFilter),input$ethnicityFilter)
+           )
         })
 
 

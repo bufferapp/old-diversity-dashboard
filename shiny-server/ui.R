@@ -6,6 +6,14 @@ shinyUI(
             tags$link(rel = "stylesheet", type = "text/css", href = "button.css"),
             sidebarLayout(
                 sidebarPanel(
+                    tags$div(style="margin: 50px 0 20px", 
+                             tags$h3("Buffer is the easiest way to save time on social media"),
+                             tags$button(class="button large btn-primary hero-cta btn-rounded",
+                                tags$a(href="https://bufferapp.com/?utm_source=traction&utm_medium=DiversityDashboard&utm_campaign=sidebar-sign-up",
+                                       "Start Scheduling Posts on Social Media")
+                             )
+                    ),
+                    tags$div(style="margin-bottom: 20px","Want to be part of the journey? ", tags$a(href="https://buffer.com/journey", "We're hiring!")),
                     tags$div(style="margin-bottom: 40px", "All data collected from a voluntary, anonymous survey completed by applicants and the Buffer team\n"),
                     selectInput("dataset", "Show diversity data for",choices = c("Applicants","The Buffer Team")),
                     radioButtons("plotType", "Plot type",c("Bar"="b", "Pie"="p")),
@@ -27,14 +35,36 @@ shinyUI(
                             'Growth',
                             'Community')
                     ),
-                    tags$div(style="margin: 50px 0 40px", 
-                             tags$h3("Buffer is the easiest way to save time on social media"),
-                             tags$button(class="button large btn-primary hero-cta btn-rounded",
-                                tags$a(href="https://bufferapp.com/?utm_source=traction&utm_medium=DiversityDashboard&utm_campaign=sidebar-sign-up",
-                                       "Start Scheduling Posts on Social Media")
-                             )
-                    ),
-                    tags$div("Want to be part of the journey? ", tags$a(href="https://buffer.com/journey", "We're hiring!"))
+                    checkboxGroupInput("ethnicityFilter", "Filter by ethnicity",
+                        c('Asian',
+                            'Black/African',
+                            'Caucasian',
+                            'Chinese',
+                            'Hispanic/Latino',
+                            'Indian',
+                            'Indigenous Australian',
+                            'Native American',
+                            'Pacific Inslander',
+                            'Southeast Asian',
+                            'West Asian/Middle Eastern',
+                            'Mixed Race',
+                            'Prefer Not to Answer'
+                        ),
+                        selected=c('Asian',
+                            'Black/African',
+                            'Caucasian',
+                            'Chinese',
+                            'Hispanic/Latino',
+                            'Indian',
+                            'Indigenous Australian',
+                            'Native American',
+                            'Pacific Inslander',
+                            'Southeast Asian',
+                            'West Asian/Middle Eastern',
+                            'Mixed Race',
+                            'Prefer Not to Answer'
+                        )
+                    )
                 ),
                 mainPanel(
                     fluidRow(
@@ -75,11 +105,11 @@ shinyUI(
                     tableOutput('applicantsTable')
                 )
              )
-        ,tabPanel('Debug',
-        mainPanel(
-        tableOutput('debugTable1'),
-        tableOutput('debugTable2')
-        )
-        )
+        #,tabPanel('Debug',
+        #mainPanel(
+        #tableOutput('debugTable1'),
+        #tableOutput('debugTable2')
+        #)
+        #)
     )
 )
