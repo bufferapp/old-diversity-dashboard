@@ -6,25 +6,30 @@ library('grid')
 library('RColorBrewer')
 
 
+
 function(input, output) {
-
-
         team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
         applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
 
         urls <- list(team = team_url, applicants = applicants_url)
 
-        applicants_data <- readGoogleSheet(applicants_url, 'applicants')
-        applicants_data <- cleanUpData(applicants_data)
+        data <- list()
 
-        team_data <- readGoogleSheet(team_url, 'team')
-        team_data <- cleanUpData(team_data)
+        data$applicants_raw <- readData('applicants')
+        data$team_raw <- readData('team')
+        data$applicants <- mergeData(data$applicants_raw)
+        data$team <- mergeData(data$team_raw)
 
         ## RETURN REQUESTED DATASET
         datasetInput <- reactive({
           switch(input$dataset,
-                 "The Buffer Team" = team_data,
-                 "Applicants" = applicants_data)
+                 "The Buffer Team" = data$team,
+                 "Applicants" = data$applicants)
+        })
+        datasetInputRaw <- reactive({
+          switch(input$dataset,
+                 "The Buffer Team" = data$team_raw,
+                 "Applicants" = data$applicants_raw)
         })
 
 
@@ -56,6 +61,6 @@ function(input, output) {
         })
 
         #raw data
-        output$teamTable <- renderTable(team_data)
-        output$applicantsTable <- renderTable(applicants_data)
+        output$teamTable <- renderTable(data$team_raw)
+        output$applicantsTable <- renderTable(data$applicants_raw)
 }

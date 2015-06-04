@@ -1,6 +1,6 @@
-library(data.table);
-library(dplyr);
-library(tidyr);
+library(data.table)
+library(dplyr)
+library(tidyr)
 
 
 cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TRUE, dropFirstCol=NA){
@@ -42,6 +42,12 @@ cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TR
           dat
 }
 
+urls <- function() {
+    team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
+    applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
+    list(team=team_url, applicants=applicants_url)
+}
+
 readGoogleSheet <- function(url, name, na.string="", header=TRUE){
     day <-format(Sys.time(), "%Y-%m-%d")
     filename <- paste0('/data/',name,day,'.csv')
@@ -64,7 +70,33 @@ cleanUpData <- function(data) {
     ## IMPORT AND TIDY DATA
     names(data) <- c("datetime","gender","ethnicity","region","age_range","department")
 
+    data
+}
+
+mergeData <- function(data) {
+    radioEthnicity <- c('Asian',
+                        'Black/African',
+                        'Caucasian',
+                        'Chinese',
+                        'Hispanic/Latino',
+                        'Indian',
+                        'Indigenous Australian',
+                        'Native American',
+                        'Pacific Inslander',
+                        'Southeast Asian',
+                        'West Asian/Middle Eastern',
+                        'Mixed Race',
+                        'Prefer Not to Answer'
+    )
     data$ethnicity <- gsub("White","Caucasian",data$ethnicity)
     data$ethnicity <- gsub("Southeast Asian","Asian",data$ethnicity)
+
+    data[!(data$ethnicity %in% radioEthnicity),]$ethnicity <- 'Self described'
     data
+}
+
+readData <- function (key) {
+    u <- urls()
+    d <- readGoogleSheet(u[key], key)
+    cleanUpData(d)
 }
