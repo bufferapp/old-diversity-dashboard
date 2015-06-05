@@ -48,6 +48,7 @@ shinyUI(
                             'Southeast Asian',
                             'West Asian/Middle Eastern',
                             'Mixed Race',
+                            'Self Described',
                             'Prefer Not to Answer'
                         ),
                         selected=c('Asian',
@@ -62,6 +63,7 @@ shinyUI(
                             'Southeast Asian',
                             'West Asian/Middle Eastern',
                             'Mixed Race',
+                            'Self Described',
                             'Prefer Not to Answer'
                         )
                     )
@@ -81,6 +83,7 @@ shinyUI(
                         )
                     ),
 
+                    #ethnicity
                     fluidRow(
                         column(width=10,
                             tags$div(class='panel panel-default',
@@ -93,7 +96,22 @@ shinyUI(
                                 )
                             )
                         )
+                    ),
+                    #age
+                    fluidRow(
+                        column(width=10,
+                            tags$div(class='panel panel-default',
+                                tags$div(class='panel-heading','Age Data'),
+                                tags$div(class='panel-body',
+                                    plotOutput("agePlot"),
+                                    conditionalPanel(condition="input.dataset =='Applicants'",
+                                        plotOutput("ageTimeSeries")
+                                     )
+                                )
+                            )
+                        )
                     )
+
                 )
              )
         ),

@@ -91,7 +91,7 @@ mergeData <- function(data) {
     data$ethnicity <- gsub("White","Caucasian",data$ethnicity)
     data$ethnicity <- gsub("Southeast Asian","Asian",data$ethnicity)
 
-    data[!(data$ethnicity %in% radioEthnicity),]$ethnicity <- 'Self described'
+    data[!(data$ethnicity %in% radioEthnicity),]$ethnicity <- 'Self Described'
     data
 }
 

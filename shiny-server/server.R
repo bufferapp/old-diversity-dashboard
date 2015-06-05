@@ -35,7 +35,7 @@ function(input, output) {
         })
 
 
-        #bar charts
+        #gender plots
         output$genderPlot <- renderPlot({
             data <- datasetInput()
             department_and_gender <- data %>%
@@ -96,6 +96,7 @@ function(input, output) {
 
         })
 
+        #ethnicity plots
         output$ethnicityPlot <- renderPlot({
             data <- datasetInput()
 
@@ -129,7 +130,7 @@ function(input, output) {
                     labs(x="",y="",title="Ethnicity Breakdown\n")
             } else {
                 ggplot(department_and_ethnicity, aes(x=reorder(department,department_size), y=n, fill=ethnicity)) +
-                    geom_bar(stat="identity") + scale_y_continuous(breaks=seq(0,10,2)) + coord_flip() +
+                    geom_bar(stat="identity") + coord_flip() +
                     labs(x="Area at Buffer",y="\nPeople", title="Ethnicity Breakdown Across Areas\n") +
                     scale_fill_brewer(palette="Pastel1") + theme_minimal()
             }
@@ -157,6 +158,73 @@ function(input, output) {
                 geom_area(stat="Identity") +
                 scale_fill_brewer(palette="Pastel1") +
                 labs(x="Date",y="People", title="Ethnicity of Applicants over time\n") +
+                theme_minimal()
+
+        })
+
+
+        #age plots
+        output$agePlot <- renderPlot({
+            data <- datasetInput()
+
+            department_and_age <- data %>%
+                group_by(department,age_range) %>%
+                summarise(n=n()) %>%
+                mutate(percent=n/sum(n),department_size=sum(n))
+
+
+            by_age <- data %>%
+                group_by(department,age_range) %>%
+                summarise(n=n()) %>%
+                mutate(percent=n/sum(n))
+
+             total_age_row <- data %>%
+                group_by(age_range) %>%
+                summarise(n=n()) %>%
+                mutate(percent=n/sum(n),department="Total")
+
+
+            total_age_breakdown <- rbind(by_age,total_age_row)
+
+            if(input$plotType == 'p') {
+                ggplot(total_age_breakdown,aes(x=factor(1),y=percent,fill=age_range)) +
+                    geom_bar(stat="identity",width=1) + 
+                    facet_wrap(~department) +
+                    coord_polar(theta="y") + 
+                    scale_fill_brewer(palette="Pastel1") +
+                    theme_minimal() +
+                    theme(axis.ticks = element_blank(), axis.text.y = element_blank(), axis.text.x = element_blank()) +
+                    labs(x="",y="",title="Age Breakdown\n")
+            } else {
+                ggplot(department_and_age, aes(x=reorder(department,department_size), y=n, fill=age_range)) +
+                    geom_bar(stat="identity") + coord_flip() +
+                    labs(x="Area at Buffer",y="\nPeople", title="Age Breakdown Across Areas\n") +
+                    scale_fill_brewer(palette="Pastel1") + theme_minimal()
+            }
+        })
+
+        output$ageTimeSeries <- renderPlot({
+            data <- datasetInput()
+            data <- data[-1,]
+            data$posixDateTime <- as.POSIXct(data$date,format="%m/%d/%Y")
+            data$posixDate <- as.Date(data$posixDateTime)
+
+            time_and_age <- data %>%
+                group_by(posixDate,age_range) %>%
+                summarise(n=n())
+
+           #fill in empty time series data with zeros to make stacked area chart
+           empty <- expand.grid(posixDate=unique(time_and_age$posixDate), age_range=unique(time_and_age$age_range))
+           time_and_age <- merge(x=empty, y=time_and_age, all.x=T) 
+           time_and_age[is.na(time_and_age$n),]$n <- 0
+
+            output$debugTable1 <-renderTable(time_and_age)
+            output$debugTable2 <-renderTable(empty)
+
+            ggplot(time_and_age, aes(x=posixDate,y=n, fill=age_range)) +
+                geom_area(stat="Identity") +
+                scale_fill_brewer(palette="Pastel1") +
+                labs(x="Date",y="People", title="Age of Applicants over time\n") +
                 theme_minimal()
 
         })
