@@ -88,10 +88,16 @@ mergeData <- function(data) {
                         'Mixed Race',
                         'Prefer Not to Answer'
     )
-    data$ethnicity <- gsub("White","Caucasian",data$ethnicity)
-    data$ethnicity <- gsub("Southeast Asian","Asian",data$ethnicity)
+    data$ethnicity <- gsub("^Caucasian.*$", replacement = "Caucasian",data$ethnicity,ignore.case=T)
+    data$ethnicity <- gsub("^White.*$", replacement = "Caucasian",data$ethnicity,ignore.case=T)
 
-    data[!(data$ethnicity %in% radioEthnicity),]$ethnicity <- 'Self Described'
+    data$ethnicity <- gsub("Southeast Asian","Asian",data$ethnicity)
+    data$ethnicity <- gsub("Chinese","Asian",data$ethnicity)
+    data$ethnicity <- gsub("Taiwanese","Asian",data$ethnicity)
+    data$ethnicity <- gsub("Hispanic/Caucasian","Mixed Race",data$ethnicity)
+
+    data$ethnicity <- ifelse(data$ethnicity %in% radioEthnicity, data$ethnicity,"Self Described")
+
     data
 }
 
