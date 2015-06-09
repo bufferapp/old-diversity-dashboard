@@ -61,9 +61,9 @@ shinyUI(
                             'Prefer Not to Answer'
                         )
                     ),
-                    tags$div(style="margin: 50px 0 20px", 
-                             tags$h3("Buffer is the easiest way to save time on social media"),
-                             tags$button(class="button large btn-primary hero-cta btn-rounded",
+                    tags$div(style="margin: auto", 
+                             tags$h3(style="text-align:center;margin-top: 40px;","Buffer is the easiest way to save time on social media"),
+                             tags$button(class="buffer-button large buffer-btn-primary hero-cta buffer-btn-rounded",
                                 tags$a(href="https://bufferapp.com/?utm_source=traction&utm_medium=DiversityDashboard&utm_campaign=sidebar-sign-up",
                                        "Start Scheduling Posts on Social Media")
                              )
