@@ -74,6 +74,7 @@ shinyUI(
                         column(width=10,
                             tags$div(class='panel panel-default',
                                 tags$div(class='panel-heading','Gender Data'),
+                                htmlOutput('genderRatings'),
                                 tags$div(class='panel-body',
                                     plotOutput("genderPlot"),
                                     conditionalPanel(condition="input.dataset =='Applicants'",
@@ -90,6 +91,7 @@ shinyUI(
                             tags$div(class='panel panel-default',
                                 tags$div(class='panel-heading','Ethnicity Data'),
                                 tags$div(class='panel-body',
+                                    htmlOutput('ethnicityRatings'),
                                     plotOutput("ethnicityPlot"),
                                     conditionalPanel(condition="input.dataset =='Applicants'",
                                         plotOutput("ethnicityTimeSeries")
@@ -104,6 +106,7 @@ shinyUI(
                             tags$div(class='panel panel-default',
                                 tags$div(class='panel-heading','Age Data'),
                                 tags$div(class='panel-body',
+                                    htmlOutput('ageRatings'),
                                     plotOutput("agePlot"),
                                     conditionalPanel(condition="input.dataset =='Applicants'",
                                         plotOutput("ageTimeSeries")
