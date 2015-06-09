@@ -57,14 +57,16 @@ function(input, output) {
                   geom_bar(stat="identity",width=1) +
                   facet_wrap(~department) +
                   coord_polar(theta="y") +
-                  scale_fill_brewer(palette="Pastel1") +
+                  scale_fill_brewer(palette="Pastel1", limits=c("Man", "Woman", "Prefer Not to Answer")) +
                   theme_minimal() +
                   theme(axis.ticks = element_blank(), axis.text.y = element_blank(), axis.text.x = element_blank()) +
                   labs(x="",y="",title="Gender Breakdown\n")
             }
             else {
-                ggplot(department_and_gender, aes(x=reorder(department,-department_size), y=n, fill=gender)) +
-                    geom_bar(stat="identity") + scale_fill_brewer(palette="Pastel1") +
+                ggplot(department_and_gender, aes(x=reorder(department,department_size), y=n, fill=gender)) +
+                    geom_bar(stat="identity") + 
+                    scale_fill_brewer(palette="Pastel1", limits=c("Man", "Woman", "Prefer Not to Answer")) +
+                    coord_flip() +
                     labs(x="\nArea at Buffer",y="People", title="Gender Breakdown Across Areas\n") +
                     theme_minimal() 
               }
