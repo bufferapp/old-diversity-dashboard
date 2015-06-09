@@ -92,7 +92,7 @@ function(input, output) {
 
             ggplot(time_and_gender, aes(x=posixDate,y=n, fill=gender)) +
                 geom_area(stat="Identity") +
-                scale_fill_brewer(palette="Pastel1") +
+                scale_fill_brewer(palette="Pastel1", limits=c("Man", "Woman", "Prefer Not to Answer")) +
                 labs(x="Date",y="People", title="Gender of Applicants over time\n") +
                 theme_minimal()
 
@@ -126,15 +126,17 @@ function(input, output) {
                     geom_bar(stat="identity",width=1) + 
                     facet_wrap(~department) +
                     coord_polar(theta="y") + 
-                    scale_fill_brewer(palette="Pastel1") +
+                    scale_fill_brewer(palette="Pastel1",limits=c("Asian","Black/African","Caucasian","Hispanic/Latino","Indian","Mixed Race","Prefer Not to Answer","Self Described","West Asian/Middle Eastern")) +
                     theme_minimal() +
                     theme(axis.ticks = element_blank(), axis.text.y = element_blank(), axis.text.x = element_blank()) +
                     labs(x="",y="",title="Ethnicity Breakdown\n")
             } else {
                 ggplot(department_and_ethnicity, aes(x=reorder(department,department_size), y=n, fill=ethnicity)) +
-                    geom_bar(stat="identity") + coord_flip() +
+                    geom_bar(stat="identity") + 
+                    coord_flip() +
                     labs(x="Area at Buffer",y="\nPeople", title="Ethnicity Breakdown Across Areas\n") +
-                    scale_fill_brewer(palette="Pastel1") + theme_minimal()
+                    scale_fill_brewer(palette="Pastel1",limits=c("Asian","Black/African","Caucasian","Hispanic/Latino","Indian","Mixed Race","Prefer Not to Answer","Self Described","West Asian/Middle Eastern")) + 
+                    theme_minimal()
             }
         })
 
@@ -158,7 +160,7 @@ function(input, output) {
 
             ggplot(time_and_ethnicity, aes(x=posixDate,y=n, fill=ethnicity)) +
                 geom_area(stat="Identity") +
-                scale_fill_brewer(palette="Pastel1") +
+                scale_fill_brewer(palette="Pastel1",limits=c("Asian","Black/African","Caucasian","Hispanic/Latino","Indian","Mixed Race","Prefer Not to Answer","Self Described","West Asian/Middle Eastern")) +
                 labs(x="Date",y="People", title="Ethnicity of Applicants over time\n") +
                 theme_minimal()
 
@@ -193,15 +195,17 @@ function(input, output) {
                     geom_bar(stat="identity",width=1) + 
                     facet_wrap(~department) +
                     coord_polar(theta="y") + 
-                    scale_fill_brewer(palette="Pastel1") +
+                    scale_fill_brewer(palette="Pastel1",limits=c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above")) +
                     theme_minimal() +
                     theme(axis.ticks = element_blank(), axis.text.y = element_blank(), axis.text.x = element_blank()) +
                     labs(x="",y="",title="Age Breakdown\n")
             } else {
                 ggplot(department_and_age, aes(x=reorder(department,department_size), y=n, fill=age_range)) +
-                    geom_bar(stat="identity") + coord_flip() +
+                    geom_bar(stat="identity") + 
+                    coord_flip() +
                     labs(x="Area at Buffer",y="\nPeople", title="Age Breakdown Across Areas\n") +
-                    scale_fill_brewer(palette="Pastel1") + theme_minimal()
+                    scale_fill_brewer(palette="Pastel1",limits=c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above")) + 
+                    theme_minimal()
             }
         })
 
@@ -225,7 +229,7 @@ function(input, output) {
 
             ggplot(time_and_age, aes(x=posixDate,y=n, fill=age_range)) +
                 geom_area(stat="Identity") +
-                scale_fill_brewer(palette="Pastel1") +
+                scale_fill_brewer(palette="Pastel1",limits=c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above")) +
                 labs(x="Date",y="People", title="Age of Applicants over time\n") +
                 theme_minimal()
 
