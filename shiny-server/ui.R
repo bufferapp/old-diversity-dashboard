@@ -6,15 +6,9 @@ shinyUI(
             tags$link(rel = "stylesheet", type = "text/css", href = "button.css"),
             sidebarLayout(
                 sidebarPanel(
-                    tags$div(style="margin: 50px 0 20px", 
-                             tags$h3("Buffer is the easiest way to save time on social media"),
-                             tags$button(class="button large btn-primary hero-cta btn-rounded",
-                                tags$a(href="https://bufferapp.com/?utm_source=traction&utm_medium=DiversityDashboard&utm_campaign=sidebar-sign-up",
-                                       "Start Scheduling Posts on Social Media")
-                             )
-                    ),
+                    tags$h3("We're building a more inclusive Buffer!"),
+                    tags$div(style="margin-bottom: 20px", "Here's a transparent, real-time look at the overall demographic diversity of our team and our candidate pool.\n"),
                     tags$div(style="margin-bottom: 20px","Want to be part of the journey? ", tags$a(href="https://buffer.com/journey", "We're hiring!")),
-                    tags$div(style="margin-bottom: 40px", "All data collected from a voluntary, anonymous survey completed by applicants and the Buffer team\n"),
                     selectInput("dataset", "Show diversity data for",choices = c("Applicants","The Buffer Team")),
                     radioButtons("plotType", "Plot type",c("Bar"="b", "Pie"="p")),
                     checkboxGroupInput("areaFilter", "Filter by area",
@@ -66,6 +60,13 @@ shinyUI(
                             'Self Described',
                             'Prefer Not to Answer'
                         )
+                    ),
+                    tags$div(style="margin: 50px 0 20px", 
+                             tags$h3("Buffer is the easiest way to save time on social media"),
+                             tags$button(class="button large btn-primary hero-cta btn-rounded",
+                                tags$a(href="https://bufferapp.com/?utm_source=traction&utm_medium=DiversityDashboard&utm_campaign=sidebar-sign-up",
+                                       "Start Scheduling Posts on Social Media")
+                             )
                     )
                 ),
                 mainPanel(
