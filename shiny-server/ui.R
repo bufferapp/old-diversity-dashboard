@@ -3,6 +3,16 @@ library(shinythemes)
 shinyUI(
     navbarPage(title="Buffer Diversity Dashboard",theme = shinytheme("flatly"),
         tabPanel('Graphs',
+            tags$head(
+                tags$script("
+                    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                    ga('create', 'UA-18896347-6', 'auto');
+                    ga('send', 'pageview');
+                ")
+            ),
             tags$link(rel = "stylesheet", type = "text/css", href = "button.css"),
             sidebarLayout(
                 sidebarPanel(
@@ -61,7 +71,7 @@ shinyUI(
                             'Prefer Not to Answer'
                         )
                     ),
-                    tags$div(style="margin: auto", 
+                    tags$div(style="margin: auto",
                              tags$h3(style="text-align:center;margin-top: 40px;","Buffer is the easiest way to save time on social media"),
                              tags$button(class="buffer-button large buffer-btn-primary hero-cta buffer-btn-rounded",
                                 tags$a(href="https://bufferapp.com/?utm_source=traction&utm_medium=DiversityDashboard&utm_campaign=sidebar-sign-up",
