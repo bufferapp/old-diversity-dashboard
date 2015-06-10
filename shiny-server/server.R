@@ -6,12 +6,6 @@ library('grid')
 library('RColorBrewer')
 
 function(input, output) {
-        filterAreas <- function(data,areas) {
-           data[data$department %in% areas,]
-        }
-        filterEthnicities <- function(data,ethnicities) {
-           data[data$ethnicity %in% ethnicities,]
-        }
         data <- list()
 
         team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
@@ -29,8 +23,16 @@ function(input, output) {
         ## RETURN REQUESTED DATASET
         datasetInput <- reactive({
           switch(input$dataset,
-                 "The Buffer Team" = filterEthnicities(filterAreas(data$team, input$areaFilter),input$ethnicityFilter),
-                 "Applicants" = filterEthnicities(filterAreas(data$applicants, input$areaFilter),input$ethnicityFilter)
+                 "The Buffer Team" = data$team %>%
+                    filter(gender %in% input$genderFilter) %>%
+                    filter(ethnicity %in% input$ethnicityFilter) %>%
+                    filter(age_range %in% input$ageFilter) %>%
+                    filter(department %in% input$areaFilter),
+                 "Applicants" = data$applicants %>%
+                    filter(gender %in% input$genderFilter) %>%
+                    filter(ethnicity %in% input$ethnicityFilter) %>%
+                    filter(age_range %in% input$ageFilter) %>%
+                    filter(department %in% input$areaFilter)
            )
         })
 
@@ -106,7 +108,9 @@ function(input, output) {
            #fill in empty time series data with zeros to make stacked area chart
            empty <- expand.grid(posixDate=unique(time_and_gender$posixDate), gender=unique(time_and_gender$gender))
            time_and_gender <- merge(x=empty, y=time_and_gender, all.x=T)
-           time_and_gender[is.na(time_and_gender$n),]$n <- 0
+           if(length(is.na(time_and_gender$n)) > 0) {
+               #time_and_gender[is.na(time_and_gender$n),]$n <- 0
+           }
 
             ggplot(time_and_gender, aes(x=posixDate,y=n, fill=gender)) +
                 geom_area(stat="Identity") +
