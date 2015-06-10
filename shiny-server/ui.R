@@ -21,6 +21,10 @@ shinyUI(
                     tags$div(style="margin-bottom: 20px","Want to be part of the journey? ", tags$a(href="https://buffer.com/journey", "We're hiring!")),
                     selectInput("dataset", "Show diversity data for",choices = c("Applicants","The Buffer Team")),
                     radioButtons("plotType", "Plot type",c("Bar"="b", "Pie"="p")),
+                    checkboxGroupInput("genderFilter", "Filter by gender",
+                        c('Man', 'Woman', 'Prefer Not to Answer'),
+                        selected=c('Man', 'Woman', 'Prefer Not to Answer')
+                    ),
                     checkboxGroupInput("areaFilter", "Filter by area",
                         c('Development',
                         'Happiness',
@@ -69,8 +73,25 @@ shinyUI(
                             'Mixed Race',
                             'Self Described',
                             'Prefer Not to Answer'
-                        )
-                    ),
+                        )),
+                        checkboxGroupInput("ageFilter", "Filter by age range",
+                            c('Under 18',
+                                '18-24',
+                                '25-34',
+                                '35-44',
+                                '45-54',
+                                '55-64',
+                                '65 or Above'
+                            ),
+                            selected=c('Under 18',
+                                '18-24',
+                                '25-34',
+                                '35-44',
+                                '45-54',
+                                '55-64',
+                                '65 or Above'
+                            )
+                        ),
                     tags$div(style="margin: auto",
                              tags$h3(style="text-align:center;margin-top: 40px;","Buffer is the easiest way to save time on social media"),
                              tags$button(class="buffer-button large buffer-btn-primary hero-cta buffer-btn-rounded",
