@@ -158,11 +158,11 @@ shinyUI(
                     tableOutput('applicantsTable')
                 )
              )
-        #,tabPanel('Debug',
-        #mainPanel(
-        #tableOutput('debugTable1'),
-        #tableOutput('debugTable2')
-        #)
-        #)
+        ,tabPanel('Debug',
+        mainPanel(
+        tableOutput('debugTable1'),
+        tableOutput('debugTable2')
+        )
+        )
     )
 )
