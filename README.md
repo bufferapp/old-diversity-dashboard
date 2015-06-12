@@ -1,0 +1,41 @@
+# Buffer's Diversity dashboard
+
+[diversity.buffer.com](http://diversity.buffer.com)
+
+*What gets measured gets managed*
+
+Built using R and [Shiny](http://shiny.rstudio.com/), this a dashboard showing realtime diversity data for applicants who apply to work at Buffer as well as the Buffer team.
+
+All data is collected through an anonymous, voluntary survey that applicants and team members submit.
+
+At Buffer we care deeply about building diverse teams. The Diversity Dashboard is our attempt to gain a deeper understanding of the diversity of our teams and people who apply to work at Buffer, as well as tracking how this changes over time.
+
+In the spirit of transparency, we want share this data with the world, as well as the code.
+
+If you are interested in creating a similar Dashboard for your own company, feel free to use the source code provided.
+
+## Setup
+
+This project is designed to run within a Docker, and is currently deployed as an [Elastic Beanstalk](https://aws.amazon.com/documentation/elastic-beanstalk/) Application.
+
+### Development environment
+
+For running locally, we use [fig](http://www.fig.sh/). Make sure you have fig installed, and then run:
+
+```
+fig up -d
+```
+
+To get the IP of your docker container (with boot2docker):
+
+```
+boot2docker ip
+```
+
+The application will run on port 3838 by default.
+
+###Deployment (using Amazon Elastic Beanstalk)
+
+Included is a ``Dockerrun.aws.json`` file. Create a new Elastic Beanstalk application [from a Docker container](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker.html).
+Once it's up and running you can create a .zip file of the source directory and upload it to AWS.
+
