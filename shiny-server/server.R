@@ -51,14 +51,14 @@ function(input, output) {
                       geom_bar(stat="identity",width=1) +
                       facet_wrap(~department) +
                       coord_polar(theta="y") +
-                      scale_fill_brewer(palette="Pastel1", limits=limits) +
+                      scale_fill_brewer(limits=limits) +
                       theme_minimal() +
                       theme(axis.ticks = element_blank(), axis.text.y = element_blank(), axis.text.x = element_blank()) +
                       labs(x="",y="",title=paste(by, "breakdown\n"))
                 } else {
                     ggplot(department_and_by, aes_string(x='reorder(department,department_size)', y='n', fill=by)) +
                         geom_bar(stat="identity") +
-                        scale_fill_brewer(palette="Pastel1", limits=limits) +
+                        scale_fill_brewer(limits=limits) +
                         coord_flip() +
                         labs(x="\nArea at Buffer",y="People", title=paste(by, "breakdown across areas\n")) +
                         theme_minimal()
@@ -94,7 +94,7 @@ function(input, output) {
 
                 ggplot(time_and_field, aes_string(x='posixDate', y='n', fill=by)) +
                     geom_area(stat="Identity") +
-                    scale_fill_brewer(palette="Pastel1", limits=limits) +
+                    scale_fill_brewer(limits=limits) +
                     labs(x="Date",y="People", title=paste(by, "of applicants over time\n")) +
                     theme_minimal()
 
