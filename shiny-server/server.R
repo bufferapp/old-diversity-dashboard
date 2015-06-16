@@ -4,13 +4,17 @@ library("downloader")
 library('scales')
 library('grid')
 library('RColorBrewer')
+library('plotly')
 source('data.R')
 
+py <- plotly(username="julianwinternheimer", key="1fe9czmr42")
+
+Darjeeling = c("#ECCBAE", "#046C9A", "#D69C4E", "#ABDDDE", "#000000","#FF0000", "#00A08A", "#F2AD00", "#F98400", "#5BBCD6")
 function(input, output) {
         ## RETURN REQUESTED DATASET
         datasetInput <- reactive({
           switch(input$dataset,
-               "The Buffer Team" = getFilteredData('team', input),
+               "The Buffer Team" = getFilteredData('team',input),
                 "Applicants" =  getFilteredData('applicants',input)
           )
         })
@@ -32,7 +36,7 @@ function(input, output) {
         }
 
         departmentPlot <- function(by, limits=c()) {
-            renderPlot({
+            renderGraph({
                 data <- datasetInput()
                 if(length(limits) == 0) {
                     limits <- unique(data[[by]])
@@ -51,23 +55,35 @@ function(input, output) {
                       geom_bar(stat="identity",width=1) +
                       facet_wrap(~department) +
                       coord_polar(theta="y") +
-                      scale_fill_brewer(limits=limits) +
+                      scale_fill_brewer(palette="Pastel1", limits=limits) +
                       theme_minimal() +
                       theme(axis.ticks = element_blank(), axis.text.y = element_blank(), axis.text.x = element_blank()) +
                       labs(x="",y="",title=paste(by, "breakdown\n"))
+                    
+                    
                 } else {
-                    ggplot(department_and_by, aes_string(x='reorder(department,department_size)', y='n', fill=by)) +
-                        geom_bar(stat="identity") +
-                        scale_fill_brewer(limits=limits) +
-                        coord_flip() +
+                    bar <- ggplot(department_and_by, aes_string(x='reorder(department,-department_size)', y='n', fill=by)) +
+                        geom_bar(position="stack",stat="identity") +
+                        scale_fill_manual(values = Darjeeling,limits=limits) +
                         labs(x="\nArea at Buffer",y="People", title=paste(by, "breakdown across areas\n")) +
                         theme_minimal()
+                    
+                    barList <- gg2list(bar)
+                    
+                    return(list(
+                      list(
+                        id=paste(by,"Plot",sep=""),
+                        task="newPlot",
+                        data=barList$data,
+                        layout=barList$layout
+                      )
+                    ))
                }
             })
         }
 
         timeSeriesPlot <-function(by,limits=c()) {
-            renderPlot({
+            renderGraph({
                 rdata <- datasetInput()
                 rdata <- rdata[-1,]
                 rdata$posixDateTime <- as.POSIXct(rdata$date,format="%m/%d/%Y")
@@ -92,11 +108,22 @@ function(input, output) {
                    }
                }
 
-                ggplot(time_and_field, aes_string(x='posixDate', y='n', fill=by)) +
-                    geom_area(stat="Identity") +
-                    scale_fill_brewer(limits=limits) +
+                timeSeries <- ggplot(time_and_field, aes_string(x='posixDate', y='n', color=by)) +
+                    geom_line(size=2) +
+                    scale_color_manual(values=Darjeeling,limits=limits) +
                     labs(x="Date",y="People", title=paste(by, "of applicants over time\n")) +
                     theme_minimal()
+                
+                timeSeriesList <- gg2list(timeSeries)
+                
+                return(list(
+                  list(
+                    id=paste(by,"TimeSeries",sep=""),
+                    task="newPlot",
+                    data=timeSeriesList$data,
+                    layout=timeSeriesList$layout
+                  )
+                ))
 
             })
         }
@@ -115,8 +142,8 @@ function(input, output) {
 
         #age data 
         output$ageRatings <- renderUI(getRatings('age_range'))
-        output$agePlot <- departmentPlot('age_range',limits=c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above"))
-        output$ageTimeSeries <- timeSeriesPlot('age_range',limits=c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above"))
+        output$age_rangePlot <- departmentPlot('age_range',limits=c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above"))
+        output$age_rangeTimeSeries <- timeSeriesPlot('age_range',limits=c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above"))
 
 
         #raw data
