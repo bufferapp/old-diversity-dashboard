@@ -107,9 +107,9 @@ shinyUI(
                                 tags$div(class='panel-heading','Gender Data'),
                                 htmlOutput('genderRatings'),
                                 tags$div(class='panel-body',
-                                    plotOutput("genderPlot"),
+                                    graphOutput("genderPlot"),
                                     conditionalPanel(condition="input.dataset =='Applicants'",
-                                        plotOutput("genderTimeSeries")
+                                        graphOutput("genderTimeSeries")
                                      )
                                 )
                             )
@@ -123,9 +123,9 @@ shinyUI(
                                 tags$div(class='panel-heading','Ethnicity Data'),
                                 tags$div(class='panel-body',
                                     htmlOutput('ethnicityRatings'),
-                                    plotOutput("ethnicityPlot"),
+                                    graphOutput("ethnicityPlot"),
                                     conditionalPanel(condition="input.dataset =='Applicants'",
-                                        plotOutput("ethnicityTimeSeries")
+                                        graphOutput("ethnicityTimeSeries")
                                      )
                                 )
                             )
@@ -138,9 +138,9 @@ shinyUI(
                                 tags$div(class='panel-heading','Age Data'),
                                 tags$div(class='panel-body',
                                     htmlOutput('ageRatings'),
-                                    plotOutput("agePlot"),
+                                    graphOutput("age_rangePlot"),
                                     conditionalPanel(condition="input.dataset =='Applicants'",
-                                        plotOutput("ageTimeSeries")
+                                        graphOutput("age_rangeTimeSeries")
                                      )
                                 )
                             )
