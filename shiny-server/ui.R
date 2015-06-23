@@ -14,6 +14,7 @@ shinyUI(
                 ")
             ),
             tags$link(rel = "stylesheet", type = "text/css", href = "button.css"),
+            tags$link(rel = "stylesheet", type = "text/css", href = "share.css"),
             sidebarLayout(
                 sidebarPanel(
                     tags$h3("We're building a more inclusive Buffer!"),
@@ -92,13 +93,35 @@ shinyUI(
                                 '65 or Above'
                             )
                         ),
-                    tags$div(style="margin: auto",
+                    tags$div(class='cta', style="margin: auto",
                              tags$h3(style="text-align:center;margin-top: 40px;","Buffer is the easiest way to save time on social media"),
-                             tags$button(class="buffer-button large buffer-btn-primary hero-cta buffer-btn-rounded",
+                             tags$button(class="buffer-button-cta large buffer-btn-primary hero-cta buffer-btn-rounded",
                                 tags$a(href="https://bufferapp.com/?utm_source=traction&utm_medium=DiversityDashboard&utm_campaign=sidebar-sign-up",
                                        "Start Scheduling Posts on Social Media")
                              )
-                    )
+                    ),
+                   tags$div(id="fb-root"),
+                   tags$script("(function(d, s, id) {
+                              var js, fjs = d.getElementsByTagName(s)[0];
+                                if (d.getElementById(id)) return;
+                                js = d.createElement(s); js.id = id;
+                                  js.src = '//connect.facebook.net/en_US/all.js#xfbml=1&appId=103667826405103';
+                                  fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'))"),
+                    tags$script(src="https://apis.google.com/js/plusone.js"),
+                    tags$div(HTML('<div class="share">
+                                     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document, "script", "twitter-wjs");</script>
+                                    <div class="grid-row">
+                                        <div class="">
+                                            <div class="social-sharing-buttons-centered">
+                                                <div class="fb-like" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" style="width:83px; overflow:hidden;position:relative; top:auto;  bottom:0px; left:3px;"></div>
+                                                <a href="https://twitter.com/share" class="twitter-share-button" data-via="buffer" data-text="Buffer&#39;s transparency dashboard: Public salaries, equity and more">Tweet</a>
+                                                <g:plusone size="medium"></g:plusone>
+                                                <a href="http://bufferapp.com/add" class="buffer-add-button" data-text="Buffer&#39;s diversity dashboard" data-count="horizontal" data-via="buffer" ></a><script type="text/javascript" src="https://d389zggrogs7qo.cloudfront.net/js/button.js"></script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   </div>'))
                 ),
                 mainPanel(
                     fluidRow(

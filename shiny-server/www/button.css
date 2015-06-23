@@ -1,4 +1,4 @@
-.buffer-button {
+.buffer-button-cta {
     background-attachment: scroll;
     background-clip: border-box;
     background-color: #168EEA;
@@ -58,7 +58,7 @@
     display:block;
     margin: 30px auto;
 }
-.buffer-button a {
+.buffer-button-cta a {
     color: #FFF;
     text-decoration: none;
 }
