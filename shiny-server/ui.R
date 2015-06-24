@@ -12,10 +12,10 @@ shinyUI(
                     ga('create', 'UA-18896347-6', 'auto');
                     ga('send', 'pageview');
                 "),
-                tags$meta(property="og:title" content="Buffer Open Source Diversity Dashboard"),
-                tags$meta(property="og:url" content="diversity.buffer.com/"),
-                tags$meta(property="og:description" content="What gets measured, gets managed. With this dashboard, we’re sharing real-time data on the demographic diversity of the Buffer team, as well as those who’ve expressed interest in joining our team, in the specific areas of age, gender, and ethnicity."),
-                tags$meta(property="og:image" content="https://open.bufferapp.com/wp-content/uploads/2015/06/pablo-23.png")
+                tags$meta(property="og:title", content="Buffer Open Source Diversity Dashboard"),
+                tags$meta(property="og:url", content="diversity.buffer.com/"),
+                tags$meta(property="og:description", content="What gets measured, gets managed. With this dashboard, we’re sharing real-time data on the demographic diversity of the Buffer team, as well as those who’ve expressed interest in joining our team, in the specific areas of age, gender, and ethnicity."),
+                tags$meta(property="og:image", content="https://open.bufferapp.com/wp-content/uploads/2015/06/pablo-23.png")
             ),
             tags$link(rel = "stylesheet", type = "text/css", href = "button.css"),
             tags$link(rel = "stylesheet", type = "text/css", href = "share.css"),
