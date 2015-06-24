@@ -6,7 +6,8 @@ library('grid')
 library('RColorBrewer')
 source('data.R')
 
-cbPalette <- c( "#56B4E9","#999999", "#E69F00", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7","#009E73", "#e79f00")
+cbPalette <- c( "#56B4E9","#999999", "#E69F00", "#009E73", "#F0E442", "#0072B2", "#D55E00", 
+                "#CC79A7","#009E73", "#e79f00","#ECCBAE", "#000000", "#FF0000", "#ABDDDE","#046C9A")
 
 function(input, output) {
         ## RETURN REQUESTED DATASET
@@ -111,8 +112,8 @@ function(input, output) {
 
         #ethnicity data 
         output$ethnicityRatings <- renderUI(getRatings('ethnicity'))
-        output$ethnicityPlot <- departmentPlot('ethnicity')
-        output$ethnicityTimeSeries <- timeSeriesPlot('ethnicity')
+        output$ethnicityPlot <- departmentPlot('ethnicity',limits=c("Asian","Black/African","Caucasian","Chinese","Hispanic/Latino","Indian","Indigenous Australian","Native American","Pacific Islander","Southeast Asian","West Asian/Middle Eastern","Mixed Race","Self Described","Prefer Not to Answer"))
+        output$ethnicityTimeSeries <- timeSeriesPlot('ethnicity',limits=c("Asian","Black/African","Caucasian","Chinese","Hispanic/Latino","Indian","Indigenous Australian","Native American","Pacific Islander","Southeast Asian","West Asian/Middle Eastern","Mixed Race","Self Described","Prefer Not to Answer"))
 
 
         #age data 
