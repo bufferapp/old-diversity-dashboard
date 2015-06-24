@@ -115,9 +115,9 @@ shinyUI(
                                         <div class="">
                                             <div class="social-sharing-buttons-centered">
                                                 <div class="fb-like" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false" style="width:83px; overflow:hidden;position:relative; top:auto;  bottom:0px; left:3px;"></div>
-                                                <a href="https://twitter.com/share" class="twitter-share-button" data-via="buffer" data-text="Buffer&#39;s transparency dashboard: Public salaries, equity and more">Tweet</a>
+                                                <a href="https://twitter.com/share" class="twitter-share-button" data-via="buffer" data-text="We\'re building a more inclusive Buffer! Take a look at our diversity dashboard">Tweet</a>
                                                 <g:plusone size="medium"></g:plusone>
-                                                <a href="http://bufferapp.com/add" class="buffer-add-button" data-text="Buffer&#39;s diversity dashboard" data-count="horizontal" data-via="buffer" ></a><script type="text/javascript" src="https://d389zggrogs7qo.cloudfront.net/js/button.js"></script>
+                                                <a href="http://bufferapp.com/add" class="buffer-add-button" data-text="We&#39;re building a more inclusive Buffer! Take a look at our diversity dashboard" data-url="http:&#x2F;&#x2F;diversity.buffer.com" data-count="horizontal" data-via="buffer" ></a><script type="text/javascript" src="https://d389zggrogs7qo.cloudfront.net/js/button.js"></script>
                                             </div>
                                         </div>
                                     </div>
