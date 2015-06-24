@@ -23,8 +23,8 @@ shinyUI(
                     selectInput("dataset", "Show diversity data for",choices = c("Applicants","The Buffer Team")),
                     radioButtons("plotType", "Plot type",c("Bar"="b", "Pie"="p")),
                     checkboxGroupInput("genderFilter", "Filter by gender",
-                        c('Man', 'Woman', 'Prefer Not to Answer'),
-                        selected=c('Man', 'Woman', 'Prefer Not to Answer')
+                        c('Man', 'Woman', 'Trans', 'Prefer Not to Answer'),
+                        selected=c('Man', 'Woman', 'Trans', 'Prefer Not to Answer')
                     ),
                     checkboxGroupInput("areaFilter", "Filter by area",
                         c('Development',
