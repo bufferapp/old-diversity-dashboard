@@ -67,7 +67,9 @@ readGoogleSheet <- function(url, name, na.string="", header=TRUE){
 
 
 cleanUpNames <- function(data) {
-    if (length(names(data)) == 7) {
+    if (length(names(data)) == 8) {
+        names(data) <- c("datetime","gender","ethnicity","region","age_range","department", "comment","opt-in")
+    } else if(length(names(data)) == 7) {
         names(data) <- c("datetime","gender","ethnicity","region","age_range","department", "comment")
     } else {
         names(data) <- c("datetime","gender","ethnicity","region","age_range","department")
