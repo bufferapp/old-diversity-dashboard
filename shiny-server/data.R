@@ -68,7 +68,7 @@ readGoogleSheet <- function(url, name, na.string="", header=TRUE){
 
 cleanUpNames <- function(data) {
     if (length(names(data)) == 8) {
-        names(data) <- c("datetime","gender","ethnicity","region","age_range","department", "comment","opt-in")
+        names(data) <- c("datetime","gender","ethnicity","region","age_range","department", "comment","opt_in")
     } else if(length(names(data)) == 7) {
         names(data) <- c("datetime","gender","ethnicity","region","age_range","department", "comment")
     } else {
@@ -76,6 +76,10 @@ cleanUpNames <- function(data) {
     }
 
     data
+}
+
+removeOptOut <- function(data) {
+    data[!grepl('Nope',data$opt_in), ]
 }
 
 mergeData <- function(data) {
@@ -114,19 +118,6 @@ readData <- function (key='team') {
     d <- readGoogleSheet(u[key], key)
     cleanUpNames(d)
 }
-team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
-applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
-
-applicants_raw <- readGoogleSheet(applicants_url, 'applicants')
-applicants_raw <- cleanUpNames(applicants_raw)
-
-team_raw <- readGoogleSheet(team_url, 'team')
-team_raw <- cleanUpNames(team_raw)
-
-applicants <- mergeData(applicants_raw)
-team <- mergeData(team_raw)
-
-data <- list(applicants_raw=applicants_raw, team_raw=team_raw, applicants=applicants, team=team)
 
 getFilteredData <- function(key, input) {
     data[[key]] %>%
@@ -165,4 +156,20 @@ reGroupMeanAndSd <- function(data) {
         group_by(department) %>%
         summarise(mean=mean(n),sd=sd(n), sum=sum(n))
 }
+
+team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
+applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
+
+applicants_raw <- readGoogleSheet(applicants_url, 'applicants')
+applicants_raw <- cleanUpNames(applicants_raw)
+applicants_raw <- removeOptOut(applicants_raw)
+
+team_raw <- readGoogleSheet(team_url, 'team')
+team_raw <- cleanUpNames(team_raw)
+
+applicants <- mergeData(applicants_raw)
+team <- mergeData(team_raw)
+
+data <- list(applicants_raw=applicants_raw, team_raw=team_raw, applicants=applicants, team=team)
+
 
