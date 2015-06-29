@@ -20,10 +20,10 @@ This project is designed to run within a Docker, and is currently deployed as an
 
 ### Development environment
 
-For running locally, we use [fig](http://www.fig.sh/). Make sure you have fig installed, and then run:
+For running locally, we use [docker-compose](https://docs.docker.com/compose/). Make sure you have [Docker](https://docs.docker.com/installation/mac/) and [docker-compose](https://docs.docker.com/compose/install/) installed, and then run:
 
 ```
-fig up -d
+docker-compose up -d
 ```
 
 To get the IP of your docker container (with boot2docker):
@@ -34,7 +34,7 @@ boot2docker ip
 
 The application will run on port 3838 by default.
 
-###Deployment (using Amazon Elastic Beanstalk)
+### Deployment (using Amazon Elastic Beanstalk)
 
 Included is a ``Dockerrun.aws.json`` file. Create a new Elastic Beanstalk application [from a Docker container](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker.html).
 Once it's up and running you can create a .zip file of the source directory and upload it to AWS.
