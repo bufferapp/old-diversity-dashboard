@@ -106,7 +106,8 @@ mergeData <- function(data) {
   data$ethnicity <- gsub("Hispanic/Caucasian","Mixed Race",data$ethnicity)
   
   data$ethnicity <- ifelse(data$ethnicity %in% radioEthnicity, data$ethnicity,"Self Described")
-
+  data$gender <- gsub("Trans","Self Described",data$gender)
+  
   data
 }
 
