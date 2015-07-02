@@ -7,7 +7,7 @@ library('RColorBrewer')
 source('data.R')
 
 cbPalette <- c( "#56B4E9","#999999", "#E69F00", "#009E73", "#F0E442", "#0072B2", "#D55E00", 
-                "#CC79A7","#009E73", "#e79f00","#ECCBAE", "#000000", "#FF0000", "#ABDDDE","#046C9A")
+                "#CC79A7","#972D15", "#74A089","#ECCBAE", "#000000", "#FF0000", "#ABDDDE","#046C9A")
 
 function(input, output) {
         ## RETURN REQUESTED DATASET
