@@ -142,8 +142,8 @@ shinyServer(function(input, output) {
   #assemble UI elements
   #gender data 
   output$genderRatings <- renderUI(getRatings('gender'))
-  output$genderPlot <- departmentPlot('gender',levels=c("Man", "Woman", "Trans","Prefer Not to Answer"))
-  output$genderTimeSeries <- timeSeriesPlot('gender',levels=c("Man", "Woman","Trans", "Prefer Not to Answer"))
+  output$genderPlot <- departmentPlot('gender',levels=c("Man", "Woman", "Self Described","Prefer Not to Answer"))
+  output$genderTimeSeries <- timeSeriesPlot('gender',levels=c("Man", "Woman","Self Described", "Prefer Not to Answer"))
   
   #ethnicity data 
   output$ethnicityRatings <- renderUI(getRatings('ethnicity'))
