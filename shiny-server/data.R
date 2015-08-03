@@ -79,7 +79,7 @@ cleanUpNames <- function(data) {
 }
 
 removeOptOut <- function(data) {
-  data[!grepl('Nope',data$opt_in), ]
+  data[!grepl('please keep',data$opt_in), ]
 }
 
 mergeData <- function(data) {
