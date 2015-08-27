@@ -5,6 +5,7 @@ library('scales')
 library('grid')
 library('RColorBrewer')
 library('rCharts')
+library('ISOweek')
 source('data.R')
 
 
@@ -94,6 +95,17 @@ shinyServer(function(input, output) {
       rdata <- rdata[-1,]
       rdata$posixDateTime <- as.POSIXct(rdata$date,format="%m/%d/%Y")
       rdata$posixDate <- as.Date(rdata$posixDateTime)
+      rdata$week_num <- as.numeric(strftime(rdata$posixDateTime,format="%W")) 
+      
+      
+      date_in_week <- function(year, week, weekday){
+        w <- paste0(year, "-W", sprintf("%02d", week), "-", weekday)
+        ISOweek2date(w)
+      }
+      
+      rdata$week <- as.Date(date_in_week(year=as.numeric(format(rdata$posixDate,"%Y")),week=rdata$week_num,weekday=1))
+      
+    
       
       if(length(levels) == 0) {
         levels <- unique(data[[by]])
@@ -103,11 +115,12 @@ shinyServer(function(input, output) {
       rdata[[by]] <- factor(rdata[[by]],levels=levels)
       
       time_and_field <- rdata %>%
-        regroup(list('posixDate', by)) %>%
+        regroup(list('week', by)) %>%
         summarise(n=n())
       
+      
       #fill in empty time series data with zeros to make stacked area chart
-      expand_args <- list(posixDate=unique(time_and_field$posixDate))
+      expand_args <- list(week=unique(time_and_field$week))
       expand_args[by] = unique(time_and_field[by])
       empty <- expand.grid(expand_args)
       time_and_field <- merge(x=empty, y=time_and_field, all.x=T)
@@ -120,7 +133,8 @@ shinyServer(function(input, output) {
       ## Order Levels of By Factor in time_and_field
       time_and_field[[by]] <- factor(time_and_field[[by]],levels=levels)
       
-      n3 <- nPlot(n~posixDate,group=by,data=time_and_field[order(time_and_field[[by]]),],type="stackedAreaChart",dom=paste(by,"TimeSeries",sep=""))
+      
+      n3 <- nPlot(n~week,group=by,data=time_and_field[order(time_and_field[[by]]),],type=input$timeSeriesType,dom=paste(by,"TimeSeries",sep=""))
       n3$chart(useInteractiveGuideline=TRUE)
       n3$xAxis(
         tickFormat =   "#!
