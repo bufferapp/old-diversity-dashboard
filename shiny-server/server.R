@@ -134,7 +134,7 @@ shinyServer(function(input, output) {
       time_and_field[[by]] <- factor(time_and_field[[by]],levels=levels)
       
       
-      n3 <- nPlot(n~week,group=by,data=time_and_field[order(time_and_field[[by]]),],type=input$timeSeriesType,dom=paste(by,"TimeSeries",sep=""))
+      n3 <- nPlot(n~week,group=by,data=time_and_field[order(time_and_field[[by]]),],type='stackedAreaChart',dom=paste(by,"TimeSeries",sep=""))
       n3$chart(useInteractiveGuideline=TRUE)
       n3$xAxis(
         tickFormat =   "#!
