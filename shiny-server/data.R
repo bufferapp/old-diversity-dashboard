@@ -84,23 +84,33 @@ removeOptOut <- function(data) {
 
 mergeData <- function(data) {
   radioEthnicity <- c('Asian',
+                      'Black/African',
                       'Black/African descent',
                       'Latinx/Hispanic',
+                      'Caucasian',
                       'White',
                       'Biracial',
                       'Multiracial',
-                      'Native American',
+                      'Chinese',
+                      'Hispanic/Latino',
+                      'Indian',
                       'Indigenous Australian',
+                      'Native American',
                       'Pacific Inslander',
+                      'Southeast Asian',
+                      'West Asian/Middle Eastern',
+                      'Mixed Race',
+                      'Self Described',
                       'Prefer Not to Answer'
   )
-  data$ethnicity <- gsub("^Caucasian.*$", replacement = "Caucasian",data$ethnicity,ignore.case=T)
-  data$ethnicity <- gsub("^White.*$", replacement = "Caucasian",data$ethnicity,ignore.case=T)
-  
+  data$ethnicity <- gsub("^Caucasian.*$", replacement = "White",data$ethnicity,ignore.case=T)
+  data$ethnicity <- gsub("^Mixed Race*$", replacement = "Multiracial",data$ethnicity,ignore.case=T)
+  data$ethnicity <- gsub("^Pacific Inslander*$", replacement = "Pacific Islander",data$ethnicity,ignore.case=T)
   data$ethnicity <- gsub("Southeast Asian","Asian",data$ethnicity)
+  data$ethnicity <- gsub("Hispanic/Latino", replacement = "Latinx/Hispanic",data$ethnicity,ignore.case=T)
   data$ethnicity <- gsub("Chinese","Asian",data$ethnicity)
   data$ethnicity <- gsub("Taiwanese","Asian",data$ethnicity)
-  data$ethnicity <- gsub("Hispanic/Caucasian","Mixed Race",data$ethnicity)
+  data$ethnicity <- gsub("Hispanic/Caucasian","Biracial",data$ethnicity)
   
   data$ethnicity <- ifelse(data$ethnicity %in% radioEthnicity, data$ethnicity,"Self Described")
   data$gender <- gsub("Trans","Self Described",data$gender)
@@ -155,7 +165,7 @@ reGroupMeanAndSd <- function(data) {
     summarise(mean=mean(n),sd=sd(n), sum=sum(n))
 }
 
-team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
+team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
 applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
 
 applicants_raw <- readGoogleSheet(applicants_url, 'applicants')

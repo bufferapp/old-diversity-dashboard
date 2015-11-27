@@ -161,8 +161,44 @@ shinyServer(function(input, output) {
   
   #ethnicity data 
   output$ethnicityRatings <- renderUI(getRatings('ethnicity'))
-  output$ethnicityPlot <- departmentPlot('ethnicity',levels=c("Asian","Black/African","Caucasian","Chinese","Hispanic/Latino","Indian","Indigenous Australian","Native American","Pacific Islander","Southeast Asian","West Asian/Middle Eastern","Mixed Race","Self Described","Prefer Not to Answer"))
-  output$ethnicityTimeSeries <- timeSeriesPlot('ethnicity',levels=c("Asian","Black/African","Caucasian","Chinese","Hispanic/Latino","Indian","Indigenous Australian","Native American","Pacific Islander","Southeast Asian","West Asian/Middle Eastern","Mixed Race","Self Described","Prefer Not to Answer"))
+  output$ethnicityPlot <- departmentPlot('ethnicity',levels=c('Asian',
+                                                              'Black/African',
+                                                              'Black/African descent',
+                                                              'Latinx/Hispanic',
+                                                              'Caucasian',
+                                                              'White',
+                                                              'Biracial',
+                                                              'Multiracial',
+                                                              'Chinese',
+                                                              'Hispanic/Latino',
+                                                              'Indian',
+                                                              'Indigenous Australian',
+                                                              'Native American',
+                                                              'Pacific Inslander',
+                                                              'Southeast Asian',
+                                                              'West Asian/Middle Eastern',
+                                                              'Mixed Race',
+                                                              'Self Described',
+                                                              'Prefer Not to Answer'))
+  output$ethnicityTimeSeries <- timeSeriesPlot('ethnicity',levels=c('Asian',
+                                                                    'Black/African',
+                                                                    'Black/African descent',
+                                                                    'Latinx/Hispanic',
+                                                                    'Caucasian',
+                                                                    'White',
+                                                                    'Biracial',
+                                                                    'Multiracial',
+                                                                    'Chinese',
+                                                                    'Hispanic/Latino',
+                                                                    'Indian',
+                                                                    'Indigenous Australian',
+                                                                    'Native American',
+                                                                    'Pacific Inslander',
+                                                                    'Southeast Asian',
+                                                                    'West Asian/Middle Eastern',
+                                                                    'Mixed Race',
+                                                                    'Self Described',
+                                                                    'Prefer Not to Answer'))
   
   
   
