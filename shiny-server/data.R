@@ -84,17 +84,14 @@ removeOptOut <- function(data) {
 
 mergeData <- function(data) {
   radioEthnicity <- c('Asian',
-                      'Black/African',
-                      'Caucasian',
-                      'Chinese',
-                      'Hispanic/Latino',
-                      'Indian',
-                      'Indigenous Australian',
+                      'Black/African descent',
+                      'Latinx/Hispanic',
+                      'White',
+                      'Biracial',
+                      'Multiracial',
                       'Native American',
+                      'Indigenous Australian',
                       'Pacific Inslander',
-                      'Southeast Asian',
-                      'West Asian/Middle Eastern',
-                      'Mixed Race',
                       'Prefer Not to Answer'
   )
   data$ethnicity <- gsub("^Caucasian.*$", replacement = "Caucasian",data$ethnicity,ignore.case=T)
