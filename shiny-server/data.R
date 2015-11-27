@@ -113,7 +113,12 @@ mergeData <- function(data) {
   data$ethnicity <- gsub("Hispanic/Caucasian","Biracial",data$ethnicity)
   
   data$ethnicity <- ifelse(data$ethnicity %in% radioEthnicity, data$ethnicity,"Self Described")
+  
   data$gender <- gsub("Trans","Self Described",data$gender)
+  
+  data$department <- gsub("Content","Marketing",data$department)
+  data$department <- gsub("Content/Marketing","Marketing",data$department)
+  data$department <- gsub("^Customer Research.*$","Research",data$department)
   
   data
 }
@@ -125,14 +130,6 @@ readData <- function (key='team') {
   
   d <- readGoogleSheet(u[key], key)
   cleanUpNames(d)
-}
-
-getFilteredData <- function(key, input) {
-  data[[key]] %>%
-    filter(gender %in% input$genderFilter) %>%
-    filter(ethnicity %in% input$ethnicityFilter) %>%
-    filter(age_range %in% input$ageFilter) %>%
-    filter(department %in% input$areaFilter)
 }
 
 getDataForInput <- function (input) {
@@ -149,6 +146,15 @@ getDataForInput <- function (input) {
            filter(department %in% input$areaFilter)
   )
 }
+
+getFilteredData <- function(key, input) {
+  data[[key]] %>%
+    filter(gender %in% input$genderFilter) %>%
+    filter(ethnicity %in% input$ethnicityFilter) %>%
+    filter(age_range %in% input$ageFilter) %>%
+    filter(department %in% input$areaFilter)
+}
+
 
 groupSumAndPercent <- function(data, by) {
   data %>%
