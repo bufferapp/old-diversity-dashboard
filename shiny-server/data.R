@@ -50,7 +50,7 @@ urls <- function() {
 
 readGoogleSheet <- function(url, name, na.string="", header=TRUE){
   day <-format(Sys.time(), "%Y-%m-%d")
-  filename <- paste0('./data/',name,day,'.csv')
+  filename <- paste0('/data/',name,day,'.csv')
   if (!file.exists(filename))
     download(url, destfile=filename)
   
