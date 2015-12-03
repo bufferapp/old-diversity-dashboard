@@ -83,7 +83,7 @@ shinyUI(
                                                         'Indian',
                                                         'Indigenous Australian',
                                                         'Native American',
-                                                        'Pacific Inslander',
+                                                        'Pacific Islander',
                                                         'Southeast Asian',
                                                         'West Asian/Middle Eastern',
                                                         'Mixed Race',
