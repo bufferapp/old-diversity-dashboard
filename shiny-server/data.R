@@ -43,7 +43,7 @@ cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TR
 }
 
 urls <- function() {
-  team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
+  team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
   applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
   list(team=team_url, applicants=applicants_url)
 }
@@ -85,7 +85,12 @@ removeOptOut <- function(data) {
 mergeData <- function(data) {
   radioEthnicity <- c('Asian',
                       'Black/African',
+                      'Black/African descent',
+                      'Latinx/Hispanic',
                       'Caucasian',
+                      'White',
+                      'Biracial',
+                      'Multiracial',
                       'Chinese',
                       'Hispanic/Latino',
                       'Indian',
@@ -95,37 +100,36 @@ mergeData <- function(data) {
                       'Southeast Asian',
                       'West Asian/Middle Eastern',
                       'Mixed Race',
+                      'Self Described',
                       'Prefer Not to Answer'
   )
-  data$ethnicity <- gsub("^Caucasian.*$", replacement = "Caucasian",data$ethnicity,ignore.case=T)
-  data$ethnicity <- gsub("^White.*$", replacement = "Caucasian",data$ethnicity,ignore.case=T)
-  
+  data$ethnicity <- gsub("^Caucasian.*$", replacement = "White",data$ethnicity,ignore.case=T)
+  data$ethnicity <- gsub("^Mixed Race*$", replacement = "Multiracial",data$ethnicity,ignore.case=T)
+  data$ethnicity <- gsub("^Pacific Inslander*$", replacement = "Pacific Islander",data$ethnicity,ignore.case=T)
   data$ethnicity <- gsub("Southeast Asian","Asian",data$ethnicity)
+  data$ethnicity <- gsub("Hispanic/Latino", replacement = "Latinx/Hispanic",data$ethnicity,ignore.case=T)
   data$ethnicity <- gsub("Chinese","Asian",data$ethnicity)
   data$ethnicity <- gsub("Taiwanese","Asian",data$ethnicity)
-  data$ethnicity <- gsub("Hispanic/Caucasian","Mixed Race",data$ethnicity)
+  data$ethnicity <- gsub("Hispanic/Caucasian","Biracial",data$ethnicity)
   
   data$ethnicity <- ifelse(data$ethnicity %in% radioEthnicity, data$ethnicity,"Self Described")
+  
   data$gender <- gsub("Trans","Self Described",data$gender)
+  
+  data$department <- gsub("Content","Marketing",data$department)
+  data$department <- gsub("Content/Marketing","Marketing",data$department)
+  data$department <- gsub("^Customer Research.*$","Research",data$department)
   
   data
 }
 
 readData <- function (key='team') {
-  team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
+  team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
   applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
   u <- list(team=team_url, applicants=applicants_url)
   
   d <- readGoogleSheet(u[key], key)
   cleanUpNames(d)
-}
-
-getFilteredData <- function(key, input) {
-  data[[key]] %>%
-    filter(gender %in% input$genderFilter) %>%
-    filter(ethnicity %in% input$ethnicityFilter) %>%
-    filter(age_range %in% input$ageFilter) %>%
-    filter(department %in% input$areaFilter)
 }
 
 getDataForInput <- function (input) {
@@ -143,6 +147,15 @@ getDataForInput <- function (input) {
   )
 }
 
+getFilteredData <- function(key, input) {
+  data[[key]] %>%
+    filter(gender %in% input$genderFilter) %>%
+    filter(ethnicity %in% input$ethnicityFilter) %>%
+    filter(age_range %in% input$ageFilter) %>%
+    filter(department %in% input$areaFilter)
+}
+
+
 groupSumAndPercent <- function(data, by) {
   data %>%
     regroup(list('department', by)) %>%
@@ -158,7 +171,7 @@ reGroupMeanAndSd <- function(data) {
     summarise(mean=mean(n),sd=sd(n), sum=sum(n))
 }
 
-team_url <- 'https://docs.google.com/spreadsheets/u/1/d/1E9WwcIEYuGxR8GUrmxL1iaozOk_0FKSPPWbnCDn_C0A/pubhtml'
+team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
 applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
 
 applicants_raw <- readGoogleSheet(applicants_url, 'applicants')
