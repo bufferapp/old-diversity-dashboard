@@ -1,10 +1,10 @@
-FROM quantumobject/docker-baseimage
+FROM ubuntu:14.04
 MAINTAINER Michael Erasmus <michael@buffer.com>
 
 #add repository and update the container
 #Installation of nesesary package/software for this containers...
-RUN echo "deb http://archive.ubuntu.com/ubuntu utopic-backports main restricted universe" >> /etc/apt/sources.list
-RUN (echo "deb http://cran.mtu.edu/bin/linux/ubuntu utopic/" >> /etc/apt/sources.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9)
+RUN echo "deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse" >> /etc/apt/sources.list
+RUN (echo "deb http://cran.mtu.edu/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9)
 RUN apt-get update && apt-get install -y -q r-base  \
                     r-base-dev \
                     gdebi-core \
@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y -q r-base  \
                     sudo \
                     libssl0.9.8 \
                     libcurl4-openssl-dev \
+                    curl less nano psmisc wget \
                     && apt-get clean \
                     && rm -rf /tmp/* /var/tmp/*  \
                     && rm -rf /var/lib/apt/lists/*
@@ -35,7 +36,7 @@ COPY startup.sh /etc/my_init.d/startup.sh
 RUN chmod +x /etc/my_init.d/startup.sh
 
 ##Adding Deamons to containers
-RUN mkdir /etc/service/shiny-server
+RUN mkdir -p /etc/service/shiny-server
 COPY shiny-server.sh /etc/service/shiny-server/run
 RUN chmod +x /etc/service/shiny-server/run
 
