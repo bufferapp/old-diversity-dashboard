@@ -93,7 +93,6 @@ mergeData <- function(data) {
                       'Multiracial',
                       'Chinese',
                       'Hispanic/Latino',
-                      'Indian',
                       'Indigenous Australian',
                       'Native American',
                       'Pacific Inslander',
@@ -107,6 +106,7 @@ mergeData <- function(data) {
   data$ethnicity <- gsub("^Mixed Race*$", replacement = "Multiracial",data$ethnicity,ignore.case=T)
   data$ethnicity <- gsub("^Pacific Inslander*$", replacement = "Pacific Islander",data$ethnicity,ignore.case=T)
   data$ethnicity <- gsub("Southeast Asian","Asian",data$ethnicity)
+  data$ethnicity <- gsub("Indian","Asian",data$ethnicity)
   data$ethnicity <- gsub("Hispanic/Latino", replacement = "Latinx/Hispanic",data$ethnicity,ignore.case=T)
   data$ethnicity <- gsub("Chinese","Asian",data$ethnicity)
   data$ethnicity <- gsub("Taiwanese","Asian",data$ethnicity)
