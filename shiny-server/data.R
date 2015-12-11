@@ -119,6 +119,7 @@ mergeData <- function(data) {
   data$department <- gsub("Content/Marketing","Marketing",data$department)
   data$department <- gsub("Content","Marketing",data$department)
   data$department <- gsub("^Customer Research.*$","Research",data$department)
+  data$department <- gsub("CEO","Leadership",data$department)
   
   data
 }
