@@ -95,7 +95,8 @@ shinyUI(
                                                '35-44',
                                                '45-54',
                                                '55-64',
-                                               '65 or Above'
+                                               '65 or Above',
+                                               'Prefer Not to Answer'
                                              ),
                                              selected=c('Under 18',
                                                         '18-24',
@@ -103,7 +104,8 @@ shinyUI(
                                                         '35-44',
                                                         '45-54',
                                                         '55-64',
-                                                        '65 or Above'
+                                                        '65 or Above',
+                                                        'Prefer Not to Answer'
                                              )
                           ),
                           tags$div(style="margin: auto",
