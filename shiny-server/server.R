@@ -202,8 +202,8 @@ shinyServer(function(input, output) {
   
   #age data 
   output$ageRatings <- renderUI(getRatings('age_range'))
-  output$age_rangePlot <- departmentPlot('age_range',levels=c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above"))
-  output$age_rangeTimeSeries <- timeSeriesPlot('age_range',levels=c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above"))
+  output$age_rangePlot <- departmentPlot('age_range',levels=c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above","Prefer Not to Answer"))
+  output$age_rangeTimeSeries <- timeSeriesPlot('age_range',levels=c("Under 18","18-24","25-34","35-44","45-54","55-64","65 or Above","Prefer Not to Answer"))
   
   
   #raw data
