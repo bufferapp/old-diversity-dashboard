@@ -103,7 +103,7 @@ shinyServer(function(input, output) {
         ISOweek2date(w)
       }
       
-      rdata$week <- as.Date(date_in_week(year=as.numeric(format(rdata$posixDate,"%Y")),week=rdata$week_num,weekday=1))
+      rdata$week <- as.Date(date_in_week(year=as.numeric(format(rdata$posixDate,"%Y")),week=rdata$week_num + 1,weekday=1))
       
     
       
