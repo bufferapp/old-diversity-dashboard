@@ -27,7 +27,15 @@ shinyUI(
                         sidebarPanel(
                           tags$h3("We're building a more inclusive Buffer!"),
                           tags$div(style="margin-bottom: 20px", "Here's a transparent, real-time look at the overall demographic diversity of our team and our candidate pool.\n"),
-                          tags$div(style="margin-bottom: 20px","Want to be part of the journey? ", tags$a(href="https://buffer.com/journey", "We're hiring!")),
+                          tags$h3(style="text-align:center;margin-bottom: 20px","Want to be part of the journey? "), 
+                          tags$button(class="buffer-button-cta large buffer-btn-primary hero-cta buffer-btn-rounded",
+                            tags$a(href="https://buffer.com/journey", "We're hiring!")
+                          ),
+                          tags$div(style="margin-bottom: 20px", 
+                              tags$span("Want to learn more about Buffer's culture first?"),
+                              tags$br(),
+                              tags$a(href="https://buffer.com/journey", "Sign up to get all the details here!")
+                          ),
                           selectInput("dataset", "Show diversity data for",choices = c("Applicants","The Buffer Team")),
                           radioButtons("plotType", "Plot type",c("Bar"="b", "Pie"="p")),
                           checkboxGroupInput("genderFilter", "Filter by gender",
