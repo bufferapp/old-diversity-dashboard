@@ -62,7 +62,6 @@ EXPOSE 3838
 CMD ["/sbin/my_init"]
 
 
-RUN apt-get update
 RUN apt-get install -y libxml2-dev
 RUN mkdir /data
 RUN chown -R shiny /data
