@@ -13,6 +13,7 @@ RUN apt-get install -y -q r-base  \
                     sudo \
                     libssl0.9.8 \
                     libcurl4-openssl-dev \
+                    libxml2-dev \
                     wget \
                     && apt-get clean \
                     && rm -rf /tmp/* /var/tmp/*  \
@@ -62,7 +63,6 @@ EXPOSE 3838
 CMD ["/sbin/my_init"]
 
 
-RUN apt-get install -y libxml2-dev
 RUN mkdir /data
 RUN chown -R shiny /data
 RUN chown -R shiny /usr/local/lib/R/site-library
