@@ -1,4 +1,4 @@
-FROM quantumobject/docker-baseimage
+FROM quantumobject/docker-baseimage:15.04
 MAINTAINER Michael Erasmus <michael@buffer.com>
 
 #add repository and update the container
