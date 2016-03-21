@@ -13,6 +13,7 @@ RUN apt-get install -y -q r-base  \
                     sudo \
                     libssl0.9.8 \
                     libcurl4-openssl-dev \
+                    libxml2-dev \
                     wget \
                     && apt-get clean \
                     && rm -rf /tmp/* /var/tmp/*  \
@@ -23,8 +24,7 @@ RUN R -e "install.packages('shiny', repos='http://cran.rstudio.com/')" \
           && wget http://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.3.0.403-amd64.deb \
           && gdebi --n shiny-server-1.3.0.403-amd64.deb \
           && rm shiny-server-1.3.0.403-amd64.deb \
-          && mkdir -p /srv/shiny-server \
-          && cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/.
+          && mkdir -p /srv/shiny-server
 
 RUN  R -e "install.packages('rmarkdown', repos='http://cran.rstudio.com/')"
 
@@ -63,8 +63,6 @@ EXPOSE 3838
 CMD ["/sbin/my_init"]
 
 
-RUN apt-get update
-RUN apt-get install -y libxml2-dev
 RUN mkdir /data
 RUN chown -R shiny /data
 RUN chown -R shiny /usr/local/lib/R/site-library
@@ -72,4 +70,3 @@ RUN R -e "install.packages(c('XML', 'ggplot2', 'downloader', 'data.table', 'dply
 COPY dependencies /srv/shiny-server/dependencies
 RUN R -e "install.packages('/srv/shiny-server/dependencies/rCharts/master.tar.gz', repos = NULL, type = 'source')"
 RUN R -e "library(rCharts)"
-COPY shiny-server /srv/shiny-server/
