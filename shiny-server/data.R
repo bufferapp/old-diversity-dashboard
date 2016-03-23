@@ -42,12 +42,6 @@ cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TR
   dat
 }
 
-urls <- function() {
-  team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
-  applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
-  list(team=team_url, applicants=applicants_url)
-}
-
 readGoogleSheet <- function(url, name, na.string="", header=TRUE){
   day <-format(Sys.time(), "%Y-%m-%d")
   filename <- paste0('/data/',name,day,'.csv')
@@ -122,30 +116,6 @@ mergeData <- function(data) {
   data$department <- gsub("CEO","Leadership",data$department)
   
   data
-}
-
-readData <- function (key='team') {
-  team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
-  applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
-  u <- list(team=team_url, applicants=applicants_url)
-  
-  d <- readGoogleSheet(u[key], key)
-  cleanUpNames(d)
-}
-
-getDataForInput <- function (input) {
-  switch(input$dataset,
-         "The Buffer Team" = data$team %>%
-           filter(gender %in% input$genderFilter) %>%
-           filter(ethnicity %in% input$ethnicityFilter) %>%
-           filter(age_range %in% input$ageFilter) %>%
-           filter(department %in% input$areaFilter),
-         "Applicants" = data$applicants %>%
-           filter(gender %in% input$genderFilter) %>%
-           filter(ethnicity %in% input$ethnicityFilter) %>%
-           filter(age_range %in% input$ageFilter) %>%
-           filter(department %in% input$areaFilter)
-  )
 }
 
 getFilteredData <- function(key, input) {
