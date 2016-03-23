@@ -44,7 +44,7 @@ cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TR
 
 readGoogleSheet <- function(url, name, na.string="", header=TRUE){
   day <-format(Sys.time(), "%Y-%m-%d")
-  filename <- paste0('/data/',name,day,'.csv')
+  filename <- paste0('/data/',name,day,'.html')
   if (!file.exists(filename))
     download(url, destfile=filename)
   
