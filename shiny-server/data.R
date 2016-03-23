@@ -145,13 +145,10 @@ reGroupMeanAndSd <- function(data) {
 team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
 applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
 
-applicants_raw <- readGoogleSheet(applicants_url, 'applicants')
-applicants_raw <- cleanUpNames(applicants_raw)
-applicants_raw <- removeOptOut(applicants_raw)
+applicants_raw <- readGoogleSheet(applicants_url, 'applicants') %>% cleanUpNames %>% removeOptOut
 
 team_raw <- readGoogleSheet(team_url, 'team')
-team_raw <- team_raw[,colSums(is.na(team_raw))<nrow(team_raw)]
-team_raw <- cleanUpNames(team_raw)
+team_raw <- team_raw[,colSums(is.na(team_raw))<nrow(team_raw)] %>% cleanUpNames
 
 applicants <- mergeData(applicants_raw)
 team <- mergeData(team_raw)
