@@ -39,12 +39,14 @@ cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TR
   }
   # Rename rows
   rownames(dat) <- seq_len(nrow(dat))
+  # Get rid of columns with NA column names
+  dat <- dat[, !is.na(names(dat))]
   dat
 }
 
 readGoogleSheet <- function(url, name, na.string="", header=TRUE){
   day <-format(Sys.time(), "%Y-%m-%d")
-  filename <- paste0('/data/',name,day,'.html')
+  filename <- paste0('/data/', name,day,'.html')
   if (!file.exists(filename))
     download(url, destfile=filename)
   
@@ -142,15 +144,13 @@ reGroupMeanAndSd <- function(data) {
     summarise(mean=mean(n),sd=sd(n), sum=sum(n))
 }
 
-team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
-applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
 
+applicants_url <- 'https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml'
 applicants_raw <- readGoogleSheet(applicants_url, 'applicants') %>% cleanUpNames %>% removeOptOut
-
-team_raw <- readGoogleSheet(team_url, 'team')
-team_raw <- team_raw[,colSums(is.na(team_raw))<nrow(team_raw)] %>% cleanUpNames
-
 applicants <- mergeData(applicants_raw)
+
+team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
+team_raw <- readGoogleSheet(team_url, 'team') %>% cleanUpNames
 team <- mergeData(team_raw)
 
 data <- list(applicants_raw=applicants_raw, team_raw=team_raw, applicants=applicants, team=team)
