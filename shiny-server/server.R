@@ -10,7 +10,7 @@ library(ISOweek)
 source('data.R')
 
 
-shinyServer(function(input, output) {
+function(input, output) {
   ## RETURN REQUESTED DATASET
   datasetInput <- reactive({
     switch(input$dataset,
@@ -211,4 +211,4 @@ shinyServer(function(input, output) {
   output$teamTable <- renderTable(data[['team_raw']])
   output$applicantsTable <- renderTable(data[['applicants_raw']])
 }
-)
+

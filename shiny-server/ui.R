@@ -2,8 +2,7 @@ library(shinythemes)
 library(downloader)
 library(rCharts)
 
-shinyUI(
-  navbarPage(title="Buffer Diversity Dashboard",theme = shinytheme("flatly"),
+navbarPage(title="Buffer Diversity Dashboard",theme = shinytheme("flatly"),
              tabPanel('Graphs',
                       tags$head(
                         tags$script("
@@ -207,5 +206,5 @@ shinyUI(
              #            tableOutput('debugTable2')
              #          )
              #)
-             )
-)
+           )
+
