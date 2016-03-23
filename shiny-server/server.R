@@ -1,11 +1,12 @@
-library("XML")
-library("ggplot2")
-library("downloader")
-library('scales')
-library('grid')
-library('RColorBrewer')
-library('rCharts')
-library('ISOweek')
+library(XML)
+library(ggplot2)
+library(downloader)
+library(scales)
+library(grid)
+library(RColorBrewer)
+library(rCharts)
+library(ISOweek)
+
 source('data.R')
 
 
