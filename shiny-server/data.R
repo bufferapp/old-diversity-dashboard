@@ -44,7 +44,7 @@ cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TR
 
 urls <- function() {
   team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
-  applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
+  applicants_url <- "https://docs.google.com/spreadsheets/d/1lWgpBsgT6Pp8JatAY3wpBa178tQmSh9BT_AJ_4JWbDw/pubhtml"
   list(team=team_url, applicants=applicants_url)
 }
 
