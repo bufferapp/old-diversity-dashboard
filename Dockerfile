@@ -3,7 +3,7 @@ MAINTAINER Michael Erasmus <michael@buffer.com>
 
 #add repository and update the container
 #Installation of nesesary package/software for this containers...
-RUN (echo "deb http://cran.rstudio.com/bin/linux/ubuntu wily/" >> /etc/apt/sources.list && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9)
+RUN (echo "deb http://cran.rstudio.com/bin/linux/ubuntu wily/" >> /etc/apt/sources.list && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E084DAB9)
 RUN apt-get update
 RUN apt-get install -y -q r-base  \
                     r-base-dev \
