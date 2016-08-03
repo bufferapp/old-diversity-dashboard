@@ -43,7 +43,7 @@ cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TR
 }
 
 urls <- function() {
-  team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
+  team_url <- 'https://docs.google.com/spreadsheets/d/17rf2ggqrYusM2u0esd_HG3z7iR1pve08F0CpYTEs6mE/pubhtml'
   applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
   list(team=team_url, applicants=applicants_url)
 }
@@ -53,7 +53,7 @@ readGoogleSheet <- function(url, name, na.string="", header=TRUE){
   filename <- paste0('/data/',name,day,'.csv')
   if (!file.exists(filename))
     download(url, destfile=filename)
-  
+
   # Suppress warnings because Google docs seems to have incomplete final line
   suppressWarnings({
     doc <- paste(readLines(filename), collapse=" ")
@@ -74,7 +74,7 @@ cleanUpNames <- function(data) {
   } else {
     names(data) <- c("datetime","gender","ethnicity","region","age_range","department")
   }
-  
+
   data
 }
 
@@ -111,24 +111,24 @@ mergeData <- function(data) {
   data$ethnicity <- gsub("Chinese","Asian",data$ethnicity)
   data$ethnicity <- gsub("Taiwanese","Asian",data$ethnicity)
   data$ethnicity <- gsub("Hispanic/Caucasian","Biracial",data$ethnicity)
-  
+
   data$ethnicity <- ifelse(data$ethnicity %in% radioEthnicity, data$ethnicity,"Self Described")
-  
+
   data$gender <- gsub("Trans","Self Described",data$gender)
-  
+
   data$department <- gsub("Content/Marketing","Marketing",data$department)
   data$department <- gsub("Content","Marketing",data$department)
   data$department <- gsub("^Customer Research.*$","Research",data$department)
   data$department <- gsub("CEO","Leadership",data$department)
-  
+
   data
 }
 
 readData <- function (key='team') {
-  team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
+  team_url <- 'https://docs.google.com/spreadsheets/d/17rf2ggqrYusM2u0esd_HG3z7iR1pve08F0CpYTEs6mE/pubhtml'
   applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
   u <- list(team=team_url, applicants=applicants_url)
-  
+
   d <- readGoogleSheet(u[key], key)
   cleanUpNames(d)
 }
@@ -162,7 +162,7 @@ groupSumAndPercent <- function(data, by) {
     regroup(list('department', by)) %>%
     summarise(n=n()) %>%
     mutate(percent=n/sum(n),department_size=sum(n))
-  
+
 }
 
 reGroupMeanAndSd <- function(data) {
@@ -172,7 +172,7 @@ reGroupMeanAndSd <- function(data) {
     summarise(mean=mean(n),sd=sd(n), sum=sum(n))
 }
 
-team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
+team_url <- 'https://docs.google.com/spreadsheets/d/17rf2ggqrYusM2u0esd_HG3z7iR1pve08F0CpYTEs6mE/pubhtml'
 applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
 
 applicants_raw <- readGoogleSheet(applicants_url, 'applicants')

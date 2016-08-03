@@ -81,7 +81,8 @@ shinyApp(
         usePackage("ggplot2")
         usePackage("downloader")
 
-        URL <- "https://docs.google.com/spreadsheets/d/1N80NMf2_Y8fDGkHapyu_FjnXBKXvYVcG5iLFQ02PYdg/pubhtml"
+        # What does it do this?
+        URL <- "https://docs.google.com/spreadsheets/d/17rf2ggqrYusM2u0esd_HG3z7iR1pve08F0CpYTEs6mE/pubhtml"
 
         data <- readGoogleSheet(URL)
         data$Ethnicity <- as.factor(data$Ethnicity)
