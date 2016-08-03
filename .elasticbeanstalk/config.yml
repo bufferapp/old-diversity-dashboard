@@ -1,6 +1,6 @@
 branch-defaults:
-  update-docker-image:
-    environment: test
+  master:
+    environment: diversity_dashboard
 global:
   application_name: diversity_dashboard
   default_ec2_keyname: null
