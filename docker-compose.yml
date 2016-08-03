@@ -1,7 +1,9 @@
-shiny:
-  build: .
-  ports:
-    - "3838:3838"
-  volumes:
-    - ./shiny-server/:/srv/shiny-server/
-    - ./conf/:/ect/shiny-server/
+version: "2"
+services:
+  shiny:
+    build: .
+    image: ustwo/diversity-dashboard
+    ports:
+      - "3838:3838"
+    volumes:
+      - ./shiny-server/:/srv/shiny-server/
