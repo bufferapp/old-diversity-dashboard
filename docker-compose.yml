@@ -7,4 +7,3 @@ services:
       - "3838:3838"
     volumes:
       - ./shiny-server/:/srv/shiny-server/
-      - ./conf/:/ect/shiny-server/
