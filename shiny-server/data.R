@@ -135,7 +135,7 @@ readData <- function (key='team') {
 
 getDataForInput <- function (input) {
   switch(input$dataset,
-         "The Buffer Team" = data$team %>%
+         "The ustwo Team" = data$team %>%
            filter(gender %in% input$genderFilter) %>%
            filter(ethnicity %in% input$ethnicityFilter) %>%
            filter(age_range %in% input$ageFilter) %>%
