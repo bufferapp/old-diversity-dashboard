@@ -13,8 +13,7 @@ shinyServer(function(input, output) {
   ## RETURN REQUESTED DATASET
   datasetInput <- reactive({
     switch(input$dataset,
-           "The ustwo Team" = getFilteredData('team', input),
-           "Applicants" =  getFilteredData('applicants',input)
+           "The ustwo Team" = getFilteredData('team', input)
     )
   })
 
@@ -208,6 +207,5 @@ shinyServer(function(input, output) {
 
   #raw data
   output$teamTable <- renderTable(data[['team_raw']])
-  output$applicantsTable <- renderTable(data[['applicants_raw']])
 }
 )

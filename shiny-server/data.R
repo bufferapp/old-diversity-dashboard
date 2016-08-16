@@ -44,8 +44,7 @@ cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TR
 
 urls <- function() {
   team_url <- 'https://docs.google.com/spreadsheets/d/17rf2ggqrYusM2u0esd_HG3z7iR1pve08F0CpYTEs6mE/pubhtml'
-  applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
-  list(team=team_url, applicants=applicants_url)
+  list(team=team_url)
 }
 
 readGoogleSheet <- function(url, name, na.string="", header=TRUE){
@@ -126,8 +125,7 @@ mergeData <- function(data) {
 
 readData <- function (key='team') {
   team_url <- 'https://docs.google.com/spreadsheets/d/17rf2ggqrYusM2u0esd_HG3z7iR1pve08F0CpYTEs6mE/pubhtml'
-  applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
-  u <- list(team=team_url, applicants=applicants_url)
+  u <- list(team=team_url)
 
   d <- readGoogleSheet(u[key], key)
   cleanUpNames(d)
@@ -136,11 +134,6 @@ readData <- function (key='team') {
 getDataForInput <- function (input) {
   switch(input$dataset,
          "The ustwo Team" = data$team %>%
-           filter(gender %in% input$genderFilter) %>%
-           filter(ethnicity %in% input$ethnicityFilter) %>%
-           filter(age_range %in% input$ageFilter) %>%
-           filter(department %in% input$areaFilter),
-         "Applicants" = data$applicants %>%
            filter(gender %in% input$genderFilter) %>%
            filter(ethnicity %in% input$ethnicityFilter) %>%
            filter(age_range %in% input$ageFilter) %>%
@@ -173,17 +166,11 @@ reGroupMeanAndSd <- function(data) {
 }
 
 team_url <- 'https://docs.google.com/spreadsheets/d/17rf2ggqrYusM2u0esd_HG3z7iR1pve08F0CpYTEs6mE/pubhtml'
-applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
-
-applicants_raw <- readGoogleSheet(applicants_url, 'applicants')
-applicants_raw <- cleanUpNames(applicants_raw)
-applicants_raw <- removeOptOut(applicants_raw)
 
 team_raw <- readGoogleSheet(team_url, 'team')
 team_raw <- team_raw[,colSums(is.na(team_raw))<nrow(team_raw)]
 team_raw <- cleanUpNames(team_raw)
 
-applicants <- mergeData(applicants_raw)
 team <- mergeData(team_raw)
 
-data <- list(applicants_raw=applicants_raw, team_raw=team_raw, applicants=applicants, team=team)
+data <- list(team_raw=team_raw, team=team)
