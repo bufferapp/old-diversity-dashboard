@@ -17,7 +17,7 @@ shinyUI(
                                     ga('create', 'UA-7940378-1', 'auto');
                                     "),
                             tags$meta(property="og:title", content="ustwo Diversity Dashboard"),
-                            tags$meta(property="og:url", content="http://ustwo.buffer.com"),
+                            tags$meta(property="og:url", content="http://diversity.ustwo.com"),
                             tags$meta(property="og:description", content="With this Dashboard we share our team data in the specific areas of age, gender, and ethnicity.")
                       ),
                       tags$link(rel = "stylesheet", type = "text/css", href = "button.css"),
