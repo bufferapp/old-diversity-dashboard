@@ -82,43 +82,17 @@ removeOptOut <- function(data) {
 }
 
 mergeData <- function(data) {
-  radioEthnicity <- c('Asian',
-                      'Black/African',
-                      'Black/African descent',
-                      'Latinx/Hispanic',
-                      'Caucasian',
-                      'White',
-                      'Biracial',
-                      'Multiracial',
-                      'Chinese',
-                      'Hispanic/Latino',
-                      'Indigenous Australian',
-                      'Native American',
-                      'Pacific Inslander',
-                      'Southeast Asian',
-                      'West Asian/Middle Eastern',
-                      'Mixed Race',
-                      'Self Described',
-                      'Prefer Not to Answer'
+  radioEthnicity <- c('Asian/Asian Other',
+                      'Black/African/Caribbean/Black Other',
+                      'Latino/Hispanic',
+                      'Mixed/Multiple ethnic groups',
+                      'Other ethnic group',
+                      'Pacific Islander',
+                      'Prefer not to say',
+                      'Self-described',
+                      'White/Caucasian/White Other'
   )
-  data$ethnicity <- gsub("^Caucasian.*$", replacement = "White",data$ethnicity,ignore.case=T)
-  data$ethnicity <- gsub("^Mixed Race*$", replacement = "Multiracial",data$ethnicity,ignore.case=T)
-  data$ethnicity <- gsub("^Pacific Inslander*$", replacement = "Pacific Islander",data$ethnicity,ignore.case=T)
-  data$ethnicity <- gsub("Southeast Asian","Asian",data$ethnicity)
-  data$ethnicity <- gsub("Indian","Asian",data$ethnicity)
-  data$ethnicity <- gsub("Hispanic/Latino", replacement = "Latinx/Hispanic",data$ethnicity,ignore.case=T)
-  data$ethnicity <- gsub("Chinese","Asian",data$ethnicity)
-  data$ethnicity <- gsub("Taiwanese","Asian",data$ethnicity)
-  data$ethnicity <- gsub("Hispanic/Caucasian","Biracial",data$ethnicity)
-
   data$ethnicity <- ifelse(data$ethnicity %in% radioEthnicity, data$ethnicity,"Self Described")
-
-  data$gender <- gsub("Trans","Self Described",data$gender)
-
-  data$department <- gsub("Content/Marketing","Marketing",data$department)
-  data$department <- gsub("Content","Marketing",data$department)
-  data$department <- gsub("^Customer Research.*$","Research",data$department)
-  data$department <- gsub("CEO","Leadership",data$department)
 
   data
 }
