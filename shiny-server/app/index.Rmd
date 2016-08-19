@@ -82,7 +82,7 @@ shinyApp(
         usePackage("downloader")
 
         # What does it do this?
-        URL <- "https://docs.google.com/spreadsheets/d/17rf2ggqrYusM2u0esd_HG3z7iR1pve08F0CpYTEs6mE/pubhtml"
+        URL <- "https://docs.google.com/spreadsheets/d/1h3QCyRQuL37UJR_Fm_zgkCpQem1wmHdP3om-JsQ-EIk/pubhtml"
 
         data <- readGoogleSheet(URL)
         data$Ethnicity <- as.factor(data$Ethnicity)

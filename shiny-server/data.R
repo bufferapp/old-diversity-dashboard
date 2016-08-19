@@ -43,7 +43,7 @@ cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TR
 }
 
 urls <- function() {
-  team_url <- 'https://docs.google.com/spreadsheets/d/17rf2ggqrYusM2u0esd_HG3z7iR1pve08F0CpYTEs6mE/pubhtml'
+  team_url <- 'https://docs.google.com/spreadsheets/d/1h3QCyRQuL37UJR_Fm_zgkCpQem1wmHdP3om-JsQ-EIk/pubhtml'
   list(team=team_url)
 }
 
@@ -98,7 +98,7 @@ mergeData <- function(data) {
 }
 
 readData <- function (key='team') {
-  team_url <- 'https://docs.google.com/spreadsheets/d/17rf2ggqrYusM2u0esd_HG3z7iR1pve08F0CpYTEs6mE/pubhtml'
+  team_url <- 'https://docs.google.com/spreadsheets/d/1h3QCyRQuL37UJR_Fm_zgkCpQem1wmHdP3om-JsQ-EIk/pubhtml'
   u <- list(team=team_url)
 
   d <- readGoogleSheet(u[key], key)
@@ -139,7 +139,7 @@ reGroupMeanAndSd <- function(data) {
     summarise(mean=mean(n),sd=sd(n), sum=sum(n))
 }
 
-team_url <- 'https://docs.google.com/spreadsheets/d/17rf2ggqrYusM2u0esd_HG3z7iR1pve08F0CpYTEs6mE/pubhtml'
+team_url <- 'https://docs.google.com/spreadsheets/d/1h3QCyRQuL37UJR_Fm_zgkCpQem1wmHdP3om-JsQ-EIk/pubhtml'
 
 team_raw <- readGoogleSheet(team_url, 'team')
 team_raw <- team_raw[,colSums(is.na(team_raw))<nrow(team_raw)]
