@@ -81,14 +81,15 @@ shinyApp(
         usePackage("ggplot2")
         usePackage("downloader")
 
-        URL <- "https://docs.google.com/spreadsheets/d/1N80NMf2_Y8fDGkHapyu_FjnXBKXvYVcG5iLFQ02PYdg/pubhtml"
+        # What does it do this?
+        URL <- "https://docs.google.com/spreadsheets/d/1h3QCyRQuL37UJR_Fm_zgkCpQem1wmHdP3om-JsQ-EIk/pubhtml"
 
         data <- readGoogleSheet(URL)
         data$Ethnicity <- as.factor(data$Ethnicity)
         data$Gender <- as.factor(data$Gender)
         #reorder factor levels for Gender
         data <- within(data, Gender <- factor(Gender,levels=names(sort(table(Gender), decreasing=TRUE))))
-        data$Area <- as.factor(data$'Area at Buffer')
+        data$Area <- as.factor(data$'Area at ustwo')
         output$table <- renderDataTable(data)
 
         output$ethnicityPlot <- renderPlot({

@@ -1,8 +1,8 @@
-# Buffer's Diversity dashboard
+# ustwo Diversity dashboard
 
-[![Join the chat at https://gitter.im/bufferapp/diversity-dashboard](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bufferapp/diversity-dashboard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[diversity.ustwo.com](http://diversity.ustwo.com)
 
-[diversity.buffer.com](http://diversity.buffer.com)
+(Anything below this line comes from the great team at Buffer, developers of the Dashboard, which here at ustwo we are using to share our own data)
 
 *What gets measured gets managed*
 
@@ -40,4 +40,3 @@ The application will run on port 3838 by default.
 
 Included is a ``Dockerrun.aws.json`` file. Create a new Elastic Beanstalk application [from a Docker container](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_docker.html).
 Once it's up and running you can create a .zip file of the source directory and upload it to AWS.
-

@@ -1,0 +1,10 @@
+branch-defaults:
+  master:
+    environment: diversity_dashboard
+global:
+  application_name: diversity_dashboard
+  default_ec2_keyname: null
+  default_platform: Docker 1.11.1
+  default_region: eu-west-1
+  profile: null
+  sc: git

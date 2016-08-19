@@ -43,9 +43,8 @@ cleanGoogleTable <- function(dat, table=1, skip=0, ncols=NA, nrows=-1, header=TR
 }
 
 urls <- function() {
-  team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
-  applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
-  list(team=team_url, applicants=applicants_url)
+  team_url <- 'https://docs.google.com/spreadsheets/d/1h3QCyRQuL37UJR_Fm_zgkCpQem1wmHdP3om-JsQ-EIk/pubhtml'
+  list(team=team_url)
 }
 
 readGoogleSheet <- function(url, name, na.string="", header=TRUE){
@@ -53,7 +52,7 @@ readGoogleSheet <- function(url, name, na.string="", header=TRUE){
   filename <- paste0('/data/',name,day,'.csv')
   if (!file.exists(filename))
     download(url, destfile=filename)
-  
+
   # Suppress warnings because Google docs seems to have incomplete final line
   suppressWarnings({
     doc <- paste(readLines(filename), collapse=" ")
@@ -74,7 +73,7 @@ cleanUpNames <- function(data) {
   } else {
     names(data) <- c("datetime","gender","ethnicity","region","age_range","department")
   }
-  
+
   data
 }
 
@@ -83,64 +82,32 @@ removeOptOut <- function(data) {
 }
 
 mergeData <- function(data) {
-  radioEthnicity <- c('Asian',
-                      'Black/African',
-                      'Black/African descent',
-                      'Latinx/Hispanic',
-                      'Caucasian',
-                      'White',
-                      'Biracial',
-                      'Multiracial',
-                      'Chinese',
-                      'Hispanic/Latino',
-                      'Indigenous Australian',
-                      'Native American',
-                      'Pacific Inslander',
-                      'Southeast Asian',
-                      'West Asian/Middle Eastern',
-                      'Mixed Race',
-                      'Self Described',
-                      'Prefer Not to Answer'
+  radioEthnicity <- c('Asian/Asian Other',
+                      'Black/African/Caribbean/Black Other',
+                      'Latino/Hispanic',
+                      'Mixed/Multiple ethnic groups',
+                      'Other ethnic group',
+                      'Pacific Islander',
+                      'Prefer not to say',
+                      'Self-described',
+                      'White/Caucasian/White Other'
   )
-  data$ethnicity <- gsub("^Caucasian.*$", replacement = "White",data$ethnicity,ignore.case=T)
-  data$ethnicity <- gsub("^Mixed Race*$", replacement = "Multiracial",data$ethnicity,ignore.case=T)
-  data$ethnicity <- gsub("^Pacific Inslander*$", replacement = "Pacific Islander",data$ethnicity,ignore.case=T)
-  data$ethnicity <- gsub("Southeast Asian","Asian",data$ethnicity)
-  data$ethnicity <- gsub("Indian","Asian",data$ethnicity)
-  data$ethnicity <- gsub("Hispanic/Latino", replacement = "Latinx/Hispanic",data$ethnicity,ignore.case=T)
-  data$ethnicity <- gsub("Chinese","Asian",data$ethnicity)
-  data$ethnicity <- gsub("Taiwanese","Asian",data$ethnicity)
-  data$ethnicity <- gsub("Hispanic/Caucasian","Biracial",data$ethnicity)
-  
   data$ethnicity <- ifelse(data$ethnicity %in% radioEthnicity, data$ethnicity,"Self Described")
-  
-  data$gender <- gsub("Trans","Self Described",data$gender)
-  
-  data$department <- gsub("Content/Marketing","Marketing",data$department)
-  data$department <- gsub("Content","Marketing",data$department)
-  data$department <- gsub("^Customer Research.*$","Research",data$department)
-  data$department <- gsub("CEO","Leadership",data$department)
-  
+
   data
 }
 
 readData <- function (key='team') {
-  team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
-  applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
-  u <- list(team=team_url, applicants=applicants_url)
-  
+  team_url <- 'https://docs.google.com/spreadsheets/d/1h3QCyRQuL37UJR_Fm_zgkCpQem1wmHdP3om-JsQ-EIk/pubhtml'
+  u <- list(team=team_url)
+
   d <- readGoogleSheet(u[key], key)
   cleanUpNames(d)
 }
 
 getDataForInput <- function (input) {
   switch(input$dataset,
-         "The Buffer Team" = data$team %>%
-           filter(gender %in% input$genderFilter) %>%
-           filter(ethnicity %in% input$ethnicityFilter) %>%
-           filter(age_range %in% input$ageFilter) %>%
-           filter(department %in% input$areaFilter),
-         "Applicants" = data$applicants %>%
+         "The ustwo Team" = data$team %>%
            filter(gender %in% input$genderFilter) %>%
            filter(ethnicity %in% input$ethnicityFilter) %>%
            filter(age_range %in% input$ageFilter) %>%
@@ -162,7 +129,7 @@ groupSumAndPercent <- function(data, by) {
     regroup(list('department', by)) %>%
     summarise(n=n()) %>%
     mutate(percent=n/sum(n),department_size=sum(n))
-  
+
 }
 
 reGroupMeanAndSd <- function(data) {
@@ -172,18 +139,12 @@ reGroupMeanAndSd <- function(data) {
     summarise(mean=mean(n),sd=sd(n), sum=sum(n))
 }
 
-team_url <- 'https://docs.google.com/spreadsheets/d/1siDUmX2EVUevnj5MYEhUchQRYodT6vuOqzCbs5xH7vY/pubhtml'
-applicants_url <- "https://docs.google.com/spreadsheets/d/11GXSEkgDnLIBWmqYWJA1VbG9xmsPPl2MFRWxvFiWmwQ/pubhtml"
-
-applicants_raw <- readGoogleSheet(applicants_url, 'applicants')
-applicants_raw <- cleanUpNames(applicants_raw)
-applicants_raw <- removeOptOut(applicants_raw)
+team_url <- 'https://docs.google.com/spreadsheets/d/1h3QCyRQuL37UJR_Fm_zgkCpQem1wmHdP3om-JsQ-EIk/pubhtml'
 
 team_raw <- readGoogleSheet(team_url, 'team')
 team_raw <- team_raw[,colSums(is.na(team_raw))<nrow(team_raw)]
 team_raw <- cleanUpNames(team_raw)
 
-applicants <- mergeData(applicants_raw)
 team <- mergeData(team_raw)
 
-data <- list(applicants_raw=applicants_raw, team_raw=team_raw, applicants=applicants, team=team)
+data <- list(team_raw=team_raw, team=team)
