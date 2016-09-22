@@ -28,10 +28,10 @@ For running locally, we use [docker-compose](https://docs.docker.com/compose/). 
 docker-compose up -d
 ```
 
-To get the IP of your docker container (with boot2docker):
+To get the IP of your docker container (with Docker Machine):
 
 ```
-boot2docker ip
+docker-machine ip
 ```
 
 The application will run on port 3838 by default.
