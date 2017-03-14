@@ -1,15 +1,15 @@
 library(shinythemes)
 library(downloader)
-library('rCharts')
+library(rCharts)
 
+navbarPage(title="Buffer Diversity Dashboard", theme = shinytheme("flatly"),
 
+           ## First Tab
+           tabPanel('Graphs',
 
-
-shinyUI(
-  navbarPage(title="Buffer Diversity Dashboard",theme = shinytheme("flatly"),
-             tabPanel('Graphs',
-                      tags$head(
-                        tags$script("
+                   ## Header
+                   tags$head(
+                       tags$script("
                                     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                                     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                                     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -17,32 +17,48 @@ shinyUI(
                                     ga('create', 'UA-18896347-6', 'auto');
                                     ga('send', 'pageview');
                                     "),
-                            tags$meta(property="og:title", content="Buffer Open Source Diversity Dashboard"),
-                            tags$meta(property="og:url", content="http://diversity.buffer.com"),
-                            tags$meta(property="og:description", content="What gets measured, gets managed. With this dashboard, we’re sharing real-time data on the demographic diversity of the Buffer team, as well as those who’ve expressed interest in joining our team, in the specific areas of age, gender, and ethnicity."),
-                            tags$meta(property="og:image", content="https://open.bufferapp.com/wp-content/uploads/2015/06/pablo-23.png")
-                      ),
-                      tags$link(rel = "stylesheet", type = "text/css", href = "button.css"),
-                      sidebarLayout(
+                       tags$meta(property="og:title", content="Buffer Open Source Diversity Dashboard"),
+                       tags$meta(property="og:url", content="http://diversity.buffer.com"),
+                       tags$meta(property="og:description", content="What gets measured, gets managed. With this dashboard, we’re sharing real-time data on the demographic diversity of the Buffer team, as well as those who’ve expressed interest in joining our team, in the specific areas of age, gender, and ethnicity."),
+                       tags$meta(property="og:image", content="https://open.bufferapp.com/wp-content/uploads/2015/06/pablo-23.png")
+                   ),
+                   tags$link(rel = "stylesheet", type = "text/css", href = "button.css"),
+
+                   ## Side Bar
+                   sidebarLayout(
                         sidebarPanel(
-                          tags$h3("We're building a more inclusive Buffer!"),
-                          tags$div(style="margin-bottom: 20px", "Here's a transparent, real-time look at the overall demographic diversity of our team and our candidate pool.\n"),
-                          tags$h3(style="text-align:center;margin-bottom: 20px","Want to be part of the journey? "), 
-                          tags$button(class="buffer-button-cta large buffer-btn-primary hero-cta buffer-btn-rounded",
-                            tags$a(href="https://buffer.com/journey", "We're hiring!")
-                          ),
-                          tags$div(style="margin-bottom: 20px", 
-                              tags$span("Want to learn more about Buffer's culture first?"),
-                              tags$br(),
-                              tags$a(href="https://buffer.com/journey", "Sign up to get all the details here!")
-                          ),
-                          selectInput("dataset", "Show diversity data for",choices = c("Applicants","The Buffer Team")),
-                          radioButtons("plotType", "Plot type",c("Bar"="b", "Pie"="p")),
-                          checkboxGroupInput("genderFilter", "Filter by gender",
-                                             c('Man', 'Woman', 'Self Described', 'Prefer Not to Answer'),
-                                             selected=c('Man', 'Woman', 'Self Described', 'Prefer Not to Answer')
-                          ),
-                          checkboxGroupInput("areaFilter", "Filter by area",
+                            tags$h3("We're building a more inclusive Buffer!"),
+                            tags$div(style="margin-bottom: 20px", "Here's a transparent, real-time look at the overall demographic diversity of our team and our candidate pool.\n"),
+                            tags$h3(style="text-align:center;margin-bottom: 20px","Want to be part of the journey? "), 
+                            tags$button(class="buffer-button-cta large buffer-btn-primary hero-cta buffer-btn-rounded",
+                                        tags$a(href="https://buffer.com/journey", "We're hiring!")
+                                        ),
+                            tags$div(style="margin-bottom: 20px", 
+                                     tags$span("Want to learn more about Buffer's culture first?"),
+                                     tags$br(),
+                                     tags$a(href="https://buffer.com/journey", "Sign up to get all the details here!")
+                                     ),
+
+
+                            ## Select a dataset
+                            selectInput("dataset", "Show diversity data for",choices = c("Applicants","The Buffer Team")),
+
+                            ## Select if you want Bars or Pies
+                            radioButtons("plotType", "Plot type",c("Bar"="b", "Pie"="p")),
+
+                            ## Select gender
+                            checkboxGroupInput("genderFilter", "Filter by gender",
+                                               c('Man',
+                                                 'Woman',
+                                                 'Self Described',
+                                                 'Prefer Not to Answer'),
+                                               selected=c('Man',
+                                                          'Woman',
+                                                          'Self Described',
+                                                          'Prefer Not to Answer')),
+
+                            ## Select departments
+                            checkboxGroupInput("areaFilter", "Filter by area",
                                              c('Development',
                                                'Happiness',
                                                'Data',
@@ -62,9 +78,10 @@ shinyUI(
                                                         'Leadership',
                                                         'Research',
                                                         'Growth',
-                                                        'Community')
-                          ),
-                          checkboxGroupInput("ethnicityFilter", "Filter by race",
+                                                        'Community')),
+
+                            ## Select ethnicities
+                            checkboxGroupInput("ethnicityFilter", "Filter by race",
                                              c('Asian',
                                                'Black/African descent',
                                                'Latinx/Hispanic',
@@ -75,8 +92,7 @@ shinyUI(
                                                'Native American',
                                                'Pacific Islander',
                                                'Self Described',
-                                               'Prefer Not to Answer'
-                                             ),
+                                               'Prefer Not to Answer'),
                                              selected=c('Asian',
                                                         'Black/African',
                                                         'Black/African descent',
@@ -94,9 +110,10 @@ shinyUI(
                                                         'West Asian/Middle Eastern',
                                                         'Mixed Race',
                                                         'Self Described',
-                                                        'Prefer Not to Answer'
-                                             )),
-                          checkboxGroupInput("ageFilter", "Filter by age range",
+                                                        'Prefer Not to Answer')),
+
+                            ## Select age ranges
+                            checkboxGroupInput("ageFilter", "Filter by age range",
                                              c('Under 18',
                                                '18-24',
                                                '25-34',
@@ -104,8 +121,7 @@ shinyUI(
                                                '45-54',
                                                '55-64',
                                                '65 or Above',
-                                               'Prefer Not to Answer'
-                                             ),
+                                               'Prefer Not to Answer'),
                                              selected=c('Under 18',
                                                         '18-24',
                                                         '25-34',
@@ -113,16 +129,14 @@ shinyUI(
                                                         '45-54',
                                                         '55-64',
                                                         '65 or Above',
-                                                        'Prefer Not to Answer'
-                                             )
-                          ),
+                                                        'Prefer Not to Answer')),
+
+                          ## Footer
                           tags$div(style="margin: auto",
                                    tags$h3(style="text-align:center;margin-top: 40px;","Buffer is the easiest way to save time on social media"),
                                    tags$button(class="buffer-button-cta large buffer-btn-primary hero-cta buffer-btn-rounded",
                                                tags$a(href="https://bufferapp.com/?utm_source=traction&utm_medium=DiversityDashboard&utm_campaign=sidebar-sign-up",
-                                                      "Start Scheduling Posts on Social Media")
-                                   )
-                          ),
+                                                      "Start Scheduling Posts on Social Media"))),
                           tags$div(id="fb-root"),
                           tags$script("(function(d, s, id) {
                               var js, fjs = d.getElementsByTagName(s)[0];
@@ -144,71 +158,50 @@ shinyUI(
                                                   </div>
                                               </div>
                                           </div>
-                                         </div>'))
-                              ),
-                        mainPanel(
-                          fluidRow(
-                            column(width=10,
-                                   tags$div(class='panel panel-default',
-                                            tags$div(class='panel-heading','Gender Data'),
-                                            htmlOutput('genderRatings'),
-                                            tags$div(class='panel-body',
-                                                     showOutput("genderPlot","nvd3"),
-                                                     conditionalPanel(condition="input.dataset =='Applicants'",
-                                                                      showOutput("genderTimeSeries","nvd3")
-                                                     )
-                                            )
-                                   )
-                            )
-                          ),
+                                         </div>'))),
 
-                          #ethnicity
-                          fluidRow(
-                            column(width=10,
-                                   tags$div(class='panel panel-default',
-                                            tags$div(class='panel-heading','Ethnicity Data'),
-                                            tags$div(class='panel-body',
-                                                     htmlOutput('ethnicityRatings'),
-                                                     showOutput("ethnicityPlot","nvd3"),
-                                                     conditionalPanel(condition="input.dataset =='Applicants'",
-                                                                       showOutput("ethnicityTimeSeries","nvd3")
-                                                     )
-                                            )
-                                   )
-                            )
-                          ),
-                          #age
-                          fluidRow(
-                            column(width=10,
-                                   tags$div(class='panel panel-default',
-                                            tags$div(class='panel-heading','Age Data'),
-                                            tags$div(class='panel-body',
-                                                     htmlOutput('ageRatings'),
-                                                     showOutput("age_rangePlot","nvd3"),
-                                                     conditionalPanel(condition="input.dataset =='Applicants'",
-                                                                       showOutput("age_rangeTimeSeries","nvd3")
-                                                     )
-                                            )
-                                   )
-                            )
-                          )
+                       ## Main Panel Where the Plots are
+                       mainPanel(
 
-                        )
-                      )
-                      ),
-             tabPanel('Raw Data',
-                      mainPanel(
+                           ## Gender data
+                           fluidRow(
+                               column(width=10,
+                                      tags$div(class='panel panel-default',
+                                               tags$div(class='panel-heading','Gender Data'),
+                                               htmlOutput('genderRatings'),
+                                               tags$div(class='panel-body',
+                                                        showOutput("genderPlot","nvd3"),
+                                                        conditionalPanel(condition="input.dataset =='Applicants'",
+                                                                         showOutput("genderTimeSeries","nvd3")))))),
+
+                           ## Ethnicity data
+                           fluidRow(
+                               column(width=10,
+                                      tags$div(class='panel panel-default',
+                                               tags$div(class='panel-heading','Ethnicity Data'),
+                                               tags$div(class='panel-body',
+                                                        htmlOutput('ethnicityRatings'),
+                                                        showOutput("ethnicityPlot","nvd3"),
+                                                        conditionalPanel(condition="input.dataset =='Applicants'",
+                                                                         showOutput("ethnicityTimeSeries","nvd3")))))),
+
+                           ## Age data
+                           fluidRow(
+                               column(width=10,
+                                      tags$div(class='panel panel-default',
+                                               tags$div(class='panel-heading','Age Data'),
+                                               tags$div(class='panel-body',
+                                                        htmlOutput('ageRatings'),
+                                                        showOutput("age_rangePlot","nvd3"),
+                                                        conditionalPanel(condition="input.dataset =='Applicants'",
+                                                                         showOutput("age_rangeTimeSeries","nvd3"))))))))),
+
+
+           ## Second Tab
+           tabPanel('Raw Data',
+                    mainPanel(
                         titlePanel("Team Data"),
                         tableOutput('teamTable'),
                         titlePanel("Applicants Data"),
-                        tableOutput('applicantsTable')
-                      )
-             )
-             #,tabPanel('Debug',
-             #          mainPanel(
-             #            tableOutput('debugTable1'),
-             #            tableOutput('debugTable2')
-             #          )
-             #)
-             )
-)
+                        tableOutput('applicantsTable'))))
+

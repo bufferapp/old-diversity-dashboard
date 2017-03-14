@@ -1,6 +1,0 @@
-May 19 18:47:15 45e6242858f7 syslog-ng[16]: syslog-ng starting up; version='3.5.5'
-May 19 18:51:27 45e6242858f7 syslog-ng[16]: syslog-ng shutting down; version='3.5.5'
-May 19 18:51:41 05b419f283c0 syslog-ng[17]: syslog-ng starting up; version='3.5.5'
-May 19 18:53:45 05b419f283c0 syslog-ng[17]: syslog-ng shutting down; version='3.5.5'
-May 19 18:53:54 b22fe2160c23 syslog-ng[18]: syslog-ng starting up; version='3.5.5'
-May 19 18:54:07 b22fe2160c23 syslog-ng[18]: syslog-ng shutting down; version='3.5.5'
