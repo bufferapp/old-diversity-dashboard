@@ -1,8 +1,8 @@
-# Buffer's Diversity dashboard
+# Buffer's (Old) Diversity dashboard
 
-[![Join the chat at https://gitter.im/bufferapp/diversity-dashboard](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bufferapp/diversity-dashboard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# DEPRECATED
 
-[diversity.buffer.com](http://diversity.buffer.com)
+This project has been deprecated by Buffer's new [diversity dashboard](http://diversity.buffer.com/) and is thus not supported by Buffer anymore. No new development or bugfixes will be taking place. Feel free to fork this project if you're up for making improvements!
 
 *What gets measured gets managed*
 
